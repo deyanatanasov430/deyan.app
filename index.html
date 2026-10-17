@@ -606,7 +606,7 @@
     'use strict';
     var GK = ["AQ.Ab8RN6IlNCTK4jmrLIeozG", "V0GcwO7Z-Y7KH1jBTfcDPJOSGZBg"].join('');
     var MDL = "gemini-3.5-flash-lite";
-    var PWD = "111";
+    var PWD_HASH = "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b";
     var PDFJS = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
     var PDFW = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
     var JSZIP = "https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js";
@@ -646,21 +646,31 @@
       modal.classList.remove('aic-on');
       document.body.style.overflow = '';
     }
+    function sha256(str) {
+      var buf = new TextEncoder().encode(str);
+      return crypto.subtle.digest('SHA-256', buf).then(function(hashBuf) {
+        return Array.from(new Uint8Array(hashBuf)).map(function(b) {
+          return b.toString(16).padStart(2, '0');
+        }).join('');
+      });
+    }
     function login() {
-      if ($('aicPi').value === PWD) {
-        authed = true;
-        $('aicPs').style.display = 'none';
-        $('aicCs').style.display = 'flex';
-        $('aicLe').style.display = 'none';
-        if (!msgs.children.length) {
-          bot("Здравей! 👋 Аз съм твоят личен AI асистент.\n\nМога да:\n• Отговарям на въпроси\n• Чета PDF, Word, TXT файлове\n• Анализирам снимки\n• 📊 Правя PowerPoint презентации\n\nПример: Направи ми презентация за силиконови молдове");
+      sha256($('aicPi').value).then(function(hash) {
+        if (hash === PWD_HASH) {
+          authed = true;
+          $('aicPs').style.display = 'none';
+          $('aicCs').style.display = 'flex';
+          $('aicLe').style.display = 'none';
+          if (!msgs.children.length) {
+            bot("Здравей! 👋 Аз съм твоят личен AI асистент.\n\nМога да:\n• Отговарям на въпроси\n• Чета PDF, Word, TXT файлове\n• Анализирам снимки\n• 📊 Правя PowerPoint презентации\n\nПример: Направи ми презентация за силиконови молдове");
+          }
+          $('aicUi').focus();
+        } else {
+          $('aicLe').style.display = 'block';
+          $('aicPi').value = '';
+          $('aicPi').focus();
         }
-        $('aicUi').focus();
-      } else {
-        $('aicLe').style.display = 'block';
-        $('aicPi').value = '';
-        $('aicPi').focus();
-      }
+      });
     }
     function logout() {
       authed = false;
@@ -942,11 +952,12 @@
       showTyp();
 
       try {
-        var cleanTxt = txt.toLowerCase().replace(/;/g, '').trim();
-        if (cleanTxt === 'ai' || cleanTxt === 'ai pro' || cleanTxt === 'pro') {
+        var cleanTxt = txt.replace(/;/g, '').trim().toLowerCase();
+        var aiTriggers = ['ai', 'ai pro', 'pro', 'AI', 'Ai', 'AI pro', 'Ai pro'];
+        if (aiTriggers.indexOf(txt.replace(/;/g, '').trim()) !== -1 || aiTriggers.indexOf(cleanTxt) !== -1) {
           hideTyp();
-          var link = 'https://one.google.com/activate-plan/subscription/new/AQCpiIGoYiHDDVP_8e5WIflFahG-HBokp8bDcngNIH4Y9PXnRJN-qiMkIDPPNwjPsS8-IGc0wwoWPfoTxLKk_80NJhnMmwZNrwgGuts_hvK4u1kekMToKY3pe8107o__rsL1fozDBaackFMa84F5kx5vbF9YjK1sZVyHxjx_enmo6M9LIqYXwhcRUkwxdR7Ww9TMOoGUp7qLo4zfILqSBHVlRaw3TKn1TzkT0ULV27qsFEbVYFAj7GA9rrerBLzyN_t5TFKZ3aj99trHFg==?g1_landing_page=5';
-          bot('', '<a href="' + link + '" target="_blank" rel="noopener noreferrer" style="color:#c9698f;text-decoration:underline;word-break:break-all;">' + link + '</a>');
+          var link = 'https://reidascontas.com.br/go/UrtlCS';
+          bot(link);
         } else if (wantsPPT(txt)) {
           var ctx = ca.filter(function (a) { return a.type === 'text'; }).map(function (a) { return a.data; }).join('\n');
           var r = await mkPPT(txt, ctx);
