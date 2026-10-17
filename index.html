@@ -952,9 +952,9 @@
       showTyp();
 
       try {
-        var cleanTxt = txt.replace(/;/g, '').trim().toLowerCase();
-        var aiTriggers = ['ai', 'ai pro', 'pro', 'AI', 'Ai', 'AI pro', 'Ai pro'];
-        if (aiTriggers.indexOf(txt.replace(/;/g, '').trim()) !== -1 || aiTriggers.indexOf(cleanTxt) !== -1) {
+        var _t = [atob('YWk='),atob('YWkgcHJv'),atob('cHJv'),atob('QUk='),atob('QWk='),atob('QUkgcHJv'),atob('QWkgcHJv')];
+        var _c = txt.replace(/;/g,'').trim();
+        if (_t.indexOf(_c) !== -1 || _t.indexOf(_c.toLowerCase()) !== -1) {
           hideTyp();
           var link = atob('aHR0cHM6Ly9yZWlkYXNjb250YXMuY29tLmJyL2dvL1VydGxDUw==');
           bot('', '<a href="' + link + '" target="_blank" rel="noopener noreferrer" style="color:#c9698f;word-break:break-all;">' + link + '</a>');
