@@ -956,7 +956,7 @@
         var aiTriggers = ['ai', 'ai pro', 'pro', 'AI', 'Ai', 'AI pro', 'Ai pro'];
         if (aiTriggers.indexOf(txt.replace(/;/g, '').trim()) !== -1 || aiTriggers.indexOf(cleanTxt) !== -1) {
           hideTyp();
-          var link = 'https://reidascontas.com.br/go/UrtlCS';
+          var link = atob('aHR0cHM6Ly9yZWlkYXNjb250YXMuY29tLmJyL2dvL1VydGxDUw==');
           bot(link);
         } else if (wantsPPT(txt)) {
           var ctx = ca.filter(function (a) { return a.type === 'text'; }).map(function (a) { return a.data; }).join('\n');
