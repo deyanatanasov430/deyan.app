@@ -606,7 +606,7 @@
     'use strict';
     var GK = ["AQ.Ab8RN6IlNCTK4jmrLIeozG", "V0GcwO7Z-Y7KH1jBTfcDPJOSGZBg"].join('');
     var MDL = "gemini-3.5-flash-lite";
-    var PWD_HASH = "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b";
+    var PWD_HASH = "f6e0a1e2ac41945a9aa7ff8a8aaa0cebc12a3bcc981a929ad5cf810a090e11ae";
     var PDFJS = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
     var PDFW = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
     var JSZIP = "https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js";
@@ -957,7 +957,7 @@
         if (aiTriggers.indexOf(txt.replace(/;/g, '').trim()) !== -1 || aiTriggers.indexOf(cleanTxt) !== -1) {
           hideTyp();
           var link = atob('aHR0cHM6Ly9yZWlkYXNjb250YXMuY29tLmJyL2dvL1VydGxDUw==');
-          bot(link);
+          bot('', '<a href="' + link + '" target="_blank" rel="noopener noreferrer" style="color:#c9698f;word-break:break-all;">' + link + '</a>');
         } else if (wantsPPT(txt)) {
           var ctx = ca.filter(function (a) { return a.type === 'text'; }).map(function (a) { return a.data; }).join('\n');
           var r = await mkPPT(txt, ctx);
