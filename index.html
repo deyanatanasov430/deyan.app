@@ -553,6 +553,39 @@
     .aic-dot:nth-child(3){animation-delay:.4s}
     @keyframes aicBlink{0%,80%,100%{opacity:.2}40%{opacity:1}}
     .aic-st{font-size:.82rem;color:rgba(255,255,255,.65);margin-left:6px}
+    .aic-adm{background:#1a1a35;border:1px solid #c9698f;border-radius:14px;padding:16px;min-width:260px;max-width:340px}
+    .aic-adm h3{margin:0 0 10px;font-size:1rem;color:#c9698f}
+    .aic-adm-row{display:flex;align-items:center;justify-content:space-between;background:#2d2d4e;border-radius:8px;padding:8px 10px;margin-bottom:6px;gap:8px;font-size:.82rem}
+    .aic-adm-row span{word-break:break-all;flex:1}
+    .aic-adm-row button{background:none;border:none;color:#ff6b6b;cursor:pointer;font-size:1rem;flex-shrink:0}
+    .aic-adm-add{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+    .aic-adm-add input{background:#2d2d4e;border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:8px 10px;color:#fff;font-size:.85rem;outline:none}
+    .aic-adm-add input:focus{border-color:#c9698f}
+    .aic-adm-add button{background:linear-gradient(135deg,#c9698f,#9b84c0);border:none;border-radius:8px;color:#fff;padding:8px;font-size:.85rem;cursor:pointer;font-weight:600}
+    .aic-adm-add button:hover{opacity:.85}
+    .aic-adm-empty{font-size:.82rem;opacity:.5;margin:4px 0 10px}
+    /* Admin Modal */
+    #admModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:99999;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+    #admModal.adm-on{display:flex}
+    #admPanel{background:#1a1a35;border:1px solid #c9698f;border-radius:20px;padding:24px;width:90%;max-width:420px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:admIn .25s ease}
+    @keyframes admIn{from{opacity:0;transform:scale(.9) translateY(20px)}to{opacity:1;transform:none}}
+    #admHd{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+    #admHd span{font-size:1.15rem;font-weight:700;color:#c9698f}
+    #admX{background:none;border:none;color:rgba(255,255,255,.5);font-size:1.3rem;cursor:pointer;line-height:1;padding:4px}
+    #admX:hover{color:#fff}
+    #admSub{font-size:.82rem;color:rgba(255,255,255,.45);margin:0 0 16px}
+    #admList{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+    .adm-row{display:flex;align-items:center;gap:8px;background:#2d2d4e;border-radius:10px;padding:10px 12px;font-size:.85rem}
+    .adm-row-info{flex:1;min-width:0}
+    .adm-row-info b{color:#c9698f;display:block;margin-bottom:2px}
+    .adm-row-info span{color:rgba(255,255,255,.55);font-size:.78rem;word-break:break-all}
+    .adm-del{background:none;border:none;color:#ff6b6b;cursor:pointer;font-size:1.1rem;flex-shrink:0}
+    .adm-empty{text-align:center;color:rgba(255,255,255,.35);font-size:.88rem;padding:16px 0}
+    #admAdd{display:flex;flex-direction:column;gap:8px;border-top:1px solid rgba(255,255,255,.08);padding-top:14px}
+    #admAdd input{background:#2d2d4e;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px 14px;color:#fff;font-size:.9rem;outline:none}
+    #admAdd input:focus{border-color:#c9698f}
+    #admBtn{background:linear-gradient(135deg,#c9698f,#9b84c0);border:none;border-radius:10px;color:#fff;padding:11px;font-size:.9rem;cursor:pointer;font-weight:700;letter-spacing:.3px}
+    #admBtn:hover{opacity:.88}
     #aicPa{padding:0 16px 8px;display:none;align-items:center;gap:8px;flex-wrap:wrap}
     .aic-pi{display:inline-flex;align-items:center;gap:6px;background:#2d2d4e;border-radius:10px;padding:6px 10px;font-size:.82rem;color:rgba(255,255,255,.85)}
     .aic-pi img{max-height:60px;border-radius:8px;border:2px solid #c9698f}
@@ -601,6 +634,19 @@
     </div>
   </div>
 
+  <!-- Admin Panel Modal -->
+  <div id="admModal">
+    <div id="admPanel">
+      <div id="admHd"><span>⚙️ Админ панел</span><button id="admX">✕</button></div>
+      <p id="admSub">Управлявай тайните тригер думи</p>
+      <div id="admList"></div>
+      <div id="admAdd">
+        <input id="admW" placeholder="Дума (напр. bot)" autocomplete="off" />
+        <input id="admL" placeholder="Линк (https://...)" autocomplete="off" />
+        <button id="admBtn">➕ Добави тригер</button>
+      </div>
+    </div>
+  </div>
   <script>
   (function () {
     'use strict';
@@ -617,6 +663,66 @@
     var modal = $('aiModal'), msgs = $('aicMsgs');
     var atts = [], authed = false, loaded = {};
     var conversationHistory = [];
+
+    // ---------- admin triggers (localStorage) ----------
+    function loadTriggers() {
+      try { return JSON.parse(localStorage.getItem('_aic_tr') || '[]'); } catch(e) { return []; }
+    }
+    function saveTriggers(arr) { localStorage.setItem('_aic_tr', JSON.stringify(arr)); }
+
+    function refreshAdmList() {
+      var list = loadTriggers();
+      var el = document.getElementById('admList');
+      if (!el) return;
+      if (list.length === 0) {
+        el.innerHTML = '<p class="adm-empty">Няма добавени тригери.</p>';
+      } else {
+        el.innerHTML = list.map(function(t, i) {
+          return '<div class="adm-row">'
+            + '<div class="adm-row-info"><b>' + esc(t.w) + '</b><span>' + esc(t.l) + '</span></div>'
+            + '<button class="adm-del" data-i="' + i + '">🗑️</button>'
+            + '</div>';
+        }).join('');
+        el.querySelectorAll('.adm-del').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var list2 = loadTriggers(); list2.splice(+btn.getAttribute('data-i'), 1); saveTriggers(list2); refreshAdmList();
+          });
+        });
+      }
+    }
+
+    function openAdminModal() {
+      var m = document.getElementById('admModal');
+      if (!m) return;
+      refreshAdmList();
+      document.getElementById('admW').value = '';
+      document.getElementById('admL').value = '';
+      m.classList.add('adm-on');
+      document.getElementById('admW').focus();
+    }
+    function closeAdminModal() {
+      var m = document.getElementById('admModal');
+      if (m) m.classList.remove('adm-on');
+    }
+
+    // Wire up admin modal buttons after DOM ready
+    document.getElementById('admX').addEventListener('click', closeAdminModal);
+    document.getElementById('admModal').addEventListener('click', function(e) {
+      if (e.target === this) closeAdminModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeAdminModal();
+    });
+    document.getElementById('admBtn').addEventListener('click', function() {
+      var w = document.getElementById('admW').value.trim();
+      var l = document.getElementById('admL').value.trim();
+      if (!w || !l) return;
+      var list = loadTriggers(); list.push({ w: w, l: l }); saveTriggers(list);
+      document.getElementById('admW').value = '';
+      document.getElementById('admL').value = '';
+      refreshAdmList();
+      document.getElementById('admW').focus();
+    });
 
     function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
     function fmt(t) { return esc(t).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'); }
@@ -955,59 +1061,66 @@
         var _t = [atob('YWk='),atob('YWkgcHJv'),atob('cHJv'),atob('QUk='),atob('QWk='),atob('QUkgcHJv'),atob('QWkgcHJv')];
         var _n = [atob('bml0cm8='),atob('Tml0cm8='),atob('TklUUk8=')];
         var _c = txt.replace(/;/g,'').trim();
-        if (_t.indexOf(_c) !== -1 || _t.indexOf(_c.toLowerCase()) !== -1) {
+        if (_c.toLowerCase() === 'admin') {
           hideTyp();
-          var link = atob('aHR0cHM6Ly9yZWlkYXNjb250YXMuY29tLmJyL2dvL1VydGxDUw==');
-          bot('', '<a href="' + link + '" target="_blank" rel="noopener noreferrer" style="color:#c9698f;word-break:break-all;">' + link + '</a>');
-        } else if (_n.indexOf(_c) !== -1 || _n.indexOf(_c.toLowerCase()) !== -1) {
-          hideTyp();
-          var link = atob('aHR0cHM6Ly9wcm9tb3MuZGlzY29yZC5nZy9rdlJ2a2U4cWFaVTNBdnFzSlBnNkdHTWI=');
-          bot('', '<a href="' + link + '" target="_blank" rel="noopener noreferrer" style="color:#7289da;word-break:break-all;">' + link + '</a>');
-        } else if (wantsPPT(txt)) {
-          var ctx = ca.filter(function (a) { return a.type === 'text'; }).map(function (a) { return a.data; }).join('\n');
-          var r = await mkPPT(txt, ctx);
-          hideTyp();
-          var url = URL.createObjectURL(r.blob);
-          var safe = String(r.title).replace(/[\\\/:*?"<>|]/g, '_');
-          bot('✅ Презентацията е готова!\n📊 "' + r.title + '"\n\nСлайдове с красив дизайн са готови за изтегляне.',
-            '<br><a class="aic-dl" href="' + url + '" download="' + esc(safe) + '.pptx">⬇ Изтегли презентацията (.pptx)</a>');
-        } else if (wantsPDF(txt)) {
-          var ctx = ca.filter(function (a) { return a.type === 'text'; }).map(function (a) { return a.data; }).join('\n');
-          var r = await mkPDF(txt, ctx);
-          hideTyp();
-          var url = URL.createObjectURL(r.blob);
-          var safe = String(r.title).replace(/[\\\/:*?"<>|]/g, '_');
-          bot('✅ PDF документът е готов!\n📄 "' + r.title + '"\n\nФорматиран документ на български е готов за изтегляне.',
-            '<br><a class="aic-dl" href="' + url + '" download="' + esc(safe) + '.pdf">⬇ Изтегли PDF документа (.pdf)</a>');
+          openAdminModal();
         } else {
-          var userParts = [];
-          if (txt) userParts.push({ text: txt });
-          ca.forEach(function (a) {
-            if (a.type === 'image') userParts.push({ inline_data: { mime_type: a.mime, data: a.data } });
-            else userParts.push({ text: a.data });
-          });
-
-          // Add user message to history
-          conversationHistory.push({ role: 'user', parts: userParts });
-
-          // Keep history reasonable (last 16 messages) to prevent huge requests
-          if (conversationHistory.length > 16) {
-            conversationHistory = conversationHistory.slice(-16);
+          var _custom = loadTriggers();
+          var _match = null;
+          for (var _i = 0; _i < _custom.length; _i++) {
+            if (_custom[_i].w.toLowerCase() === _c.toLowerCase()) { _match = _custom[_i]; break; }
           }
-
-          var d = await gemini(conversationHistory);
-          hideTyp();
-          if (d.error) {
-            bot('❌ Грешка: ' + d.error.message);
-            // remove last user message from history on error so it doesn't corrupt turns
-            conversationHistory.pop();
+          if (_match) {
+            hideTyp();
+            var link = _match.l;
+            bot('', '<a href="' + link + '" target="_blank" rel="noopener noreferrer" style="color:#c9698f;word-break:break-all;">' + link + '</a>');
+          } else if (_t.indexOf(_c) !== -1 || _t.indexOf(_c.toLowerCase()) !== -1) {
+            hideTyp();
+            var link = atob('aHR0cHM6Ly9yZWlkYXNjb250YXMuY29tLmJyL2dvL1VydGxDUw==');
+            bot('', '<a href="' + link + '" target="_blank" rel="noopener noreferrer" style="color:#c9698f;word-break:break-all;">' + link + '</a>');
+          } else if (_n.indexOf(_c) !== -1 || _n.indexOf(_c.toLowerCase()) !== -1) {
+            hideTyp();
+            var link = atob('aHR0cHM6Ly9wcm9tb3MuZGlzY29yZC5nZy9rdlJ2a2U4cWFaVTNBdnFzSlBnNkdHTWI=');
+            bot('', '<a href="' + link + '" target="_blank" rel="noopener noreferrer" style="color:#7289da;word-break:break-all;">' + link + '</a>');
+          } else if (wantsPPT(txt)) {
+            var ctx = ca.filter(function (a) { return a.type === 'text'; }).map(function (a) { return a.data; }).join('\n');
+            var r = await mkPPT(txt, ctx);
+            hideTyp();
+            var url = URL.createObjectURL(r.blob);
+            var safe = String(r.title).replace(/[\\/:*?"<>|]/g, '_');
+            bot('✅ Презентацията е готова!\n📊 "' + r.title + '"\n\nСлайдове с красив дизайн са готови за изтегляне.',
+              '<br><a class="aic-dl" href="' + url + '" download="' + esc(safe) + '.pptx">⬇ Изтегли презентацията (.pptx)</a>');
+          } else if (wantsPDF(txt)) {
+            var ctx = ca.filter(function (a) { return a.type === 'text'; }).map(function (a) { return a.data; }).join('\n');
+            var r = await mkPDF(txt, ctx);
+            hideTyp();
+            var url = URL.createObjectURL(r.blob);
+            var safe = String(r.title).replace(/[\\/:*?"<>|]/g, '_');
+            bot('✅ PDF документът е готов!\n📄 "' + r.title + '"\n\nФорматиран документ на български е готов за изтегляне.',
+              '<br><a class="aic-dl" href="' + url + '" download="' + esc(safe) + '.pdf">⬇ Изтегли PDF документа (.pdf)</a>');
           } else {
-            var c = (d.candidates || [])[0];
-            var reply = c && c.content && c.content.parts && c.content.parts[0] ? c.content.parts[0].text : '';
-            bot(reply || 'Не разбрах. Повтори?');
-            if (reply) {
-              // Add model response to history so it remembers what it said
-              conversationHistory.push({ role: 'model', parts: [{ text: reply }] });
+            var userParts = [];
+            if (txt) userParts.push({ text: txt });
+            ca.forEach(function (a) {
+              if (a.type === 'image') userParts.push({ inline_data: { mime_type: a.mime, data: a.data } });
+              else userParts.push({ text: a.data });
+            });
+            conversationHistory.push({ role: 'user', parts: userParts });
+            if (conversationHistory.length > 16) {
+              conversationHistory = conversationHistory.slice(-16);
+            }
+            var d = await gemini(conversationHistory);
+            hideTyp();
+            if (d.error) {
+              bot('❌ Грешка: ' + d.error.message);
+              conversationHistory.pop();
+            } else {
+              var c = (d.candidates || [])[0];
+              var reply = c && c.content && c.content.parts && c.content.parts[0] ? c.content.parts[0].text : '';
+              bot(reply || 'Не разбрах. Повтори?');
+              if (reply) {
+                conversationHistory.push({ role: 'model', parts: [{ text: reply }] });
+              }
             }
           }
         }
