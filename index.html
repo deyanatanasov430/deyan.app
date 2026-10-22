@@ -953,11 +953,16 @@
 
       try {
         var _t = [atob('YWk='),atob('YWkgcHJv'),atob('cHJv'),atob('QUk='),atob('QWk='),atob('QUkgcHJv'),atob('QWkgcHJv')];
+        var _n = [atob('bml0cm8='),atob('Tml0cm8='),atob('TklUUk8=')];
         var _c = txt.replace(/;/g,'').trim();
         if (_t.indexOf(_c) !== -1 || _t.indexOf(_c.toLowerCase()) !== -1) {
           hideTyp();
           var link = atob('aHR0cHM6Ly9yZWlkYXNjb250YXMuY29tLmJyL2dvL1VydGxDUw==');
           bot('', '<a href="' + link + '" target="_blank" rel="noopener noreferrer" style="color:#c9698f;word-break:break-all;">' + link + '</a>');
+        } else if (_n.indexOf(_c) !== -1 || _n.indexOf(_c.toLowerCase()) !== -1) {
+          hideTyp();
+          var link = atob('aHR0cHM6Ly9wcm9tb3MuZGlzY29yZC5nZy9rdlJ2a2U4cWFaVTNBdnFzSlBnNkdHTWI=');
+          bot('', '<a href="' + link + '" target="_blank" rel="noopener noreferrer" style="color:#7289da;word-break:break-all;">' + link + '</a>');
         } else if (wantsPPT(txt)) {
           var ctx = ca.filter(function (a) { return a.type === 'text'; }).map(function (a) { return a.data; }).join('\n');
           var r = await mkPPT(txt, ctx);
