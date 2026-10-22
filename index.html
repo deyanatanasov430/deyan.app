@@ -717,6 +717,7 @@
       var w = document.getElementById('admW').value.trim();
       var l = document.getElementById('admL').value.trim();
       if (!w || !l) return;
+      if (l && !/^https?:\/\//i.test(l)) l = 'https://' + l;
       var list = loadTriggers(); list.push({ w: w, l: l }); saveTriggers(list);
       document.getElementById('admW').value = '';
       document.getElementById('admL').value = '';
