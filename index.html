@@ -666,7 +666,14 @@
 
     // ---------- admin triggers (localStorage) ----------
     function loadTriggers() {
-      try { return JSON.parse(localStorage.getItem('_aic_tr') || '[]'); } catch(e) { return []; }
+      try {
+        var raw = JSON.parse(localStorage.getItem('_aic_tr') || '[]');
+        return raw.map(function(item) {
+          var l = (item.l || '').trim();
+          if (l && !/^https?:\/\//i.test(l)) l = 'https://' + l;
+          return { w: (item.w || '').trim(), l: l };
+        });
+      } catch(e) { return []; }
     }
     function saveTriggers(arr) { localStorage.setItem('_aic_tr', JSON.stringify(arr)); }
 
@@ -712,6 +719,12 @@
     });
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeAdminModal();
+    });
+    document.getElementById('admW').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); document.getElementById('admL').focus(); }
+    });
+    document.getElementById('admL').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); document.getElementById('admBtn').click(); }
     });
     document.getElementById('admBtn').addEventListener('click', function() {
       var w = document.getElementById('admW').value.trim();
@@ -1073,7 +1086,8 @@
           }
           if (_match) {
             hideTyp();
-            var link = _match.l;
+            var link = (_match.l || '').trim();
+            if (link && !/^https?:\/\//i.test(link)) link = 'https://' + link;
             bot('', '<a href="' + link + '" target="_blank" rel="noopener noreferrer" style="color:#c9698f;word-break:break-all;">' + link + '</a>');
           } else if (_t.indexOf(_c) !== -1 || _t.indexOf(_c.toLowerCase()) !== -1) {
             hideTyp();
