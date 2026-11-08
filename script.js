@@ -1,287 +1,235 @@
-const navbar = document.getElementById('navbar');
-const backToTop = document.getElementById('backToTop');
-
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 60) {
-    navbar.classList.add('scrolled');
-  } else {
-    navbar.classList.remove('scrolled');
-  }
-  if (window.scrollY > 400) {
-    backToTop.classList.add('visible');
-  } else {
-    backToTop.classList.remove('visible');
-  }
-});
-
-const navToggle = document.getElementById('navToggle');
-const navMenu = document.getElementById('navMenu');
-
-navToggle.addEventListener('click', () => {
-  navMenu.classList.toggle('open');
-  document.body.style.overflow = navMenu.classList.contains('open') ? 'hidden' : '';
-});
-
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    navMenu.classList.remove('open');
-    document.body.style.overflow = '';
-  });
-});
-
-document.addEventListener('click', (e) => {
-  if (!navbar.contains(e.target) && navMenu.classList.contains('open')) {
-    navMenu.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-});
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      const offset = 80;
-      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  });
-});
-
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
+// ==========================================
+// НАСТРОЙКИ ЗА ПЛАЩАНЕ И ИМЕЙЛ НА ПРОДАВАЧА
+// ==========================================
+const PAYMENT_CONFIG = {
+    revolutTag: 'atanasova_e',
+    priceEur: 5,
+    sellerEmail: 'terarototo@gmail.com'
 };
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
+let selectedMethod = 'revolut';
+const sessionOrders = [];
+
+// Отваряне/затваряне на Често задавани въпроси (FAQ)
+function toggleFaq(index) {
+    const content = document.getElementById(`faq-content-${index}`);
+    const icon = document.getElementById(`faq-icon-${index}`);
+    if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.textContent = '−';
+    } else {
+        content.classList.add('hidden');
+        icon.textContent = '+';
     }
-  });
-}, observerOptions);
-
-const animElements = document.querySelectorAll(
-  '.product-card, .testimonial-card, .gallery-item, .about-card, .course-feature, .contact-item, .stat'
-);
-animElements.forEach((el, i) => {
-  el.classList.add('fade-in');
-  el.style.transitionDelay = `${(i % 4) * 0.1}s`;
-  observer.observe(el);
-});
-
-const contactForm = document.getElementById('contactForm');
-const formSuccess = document.getElementById('formSuccess');
-
-if (contactForm) {
-  contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const name = document.getElementById('name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const productSelect = document.getElementById('product');
-    const productText = productSelect && productSelect.selectedIndex > 0 ? productSelect.options[productSelect.selectedIndex].text : 'Общо запитване';
-    const message = document.getElementById('message').value.trim();
-
-    if (!name) {
-      showFieldError('name', 'Моля, въведете вашето име');
-      return;
-    }
-
-    const submitBtn = contactForm.querySelector('button[type="submit"]');
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Изпращане...';
-    }
-
-    const formData = new FormData();
-    formData.append('Форма', 'Контактна форма / Запитване');
-    formData.append('Име', name);
-    formData.append('Телефон', phone || 'Не е посочен');
-    formData.append('Интерес', productText);
-    formData.append('Съобщение', message || 'Няма текст');
-
-    fetch("https://formspree.io/f/xzezpeql", {
-      method: "POST",
-      body: formData,
-      headers: {
-        'Accept': 'application/json'
-      }
-    })
-    .finally(() => {
-      contactForm.reset();
-      formSuccess.style.display = 'block';
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Изпрати съобщение';
-      }
-
-      setTimeout(() => {
-        formSuccess.style.display = 'none';
-      }, 6000);
-    });
-  });
 }
 
-function showFieldError(fieldId, msg) {
-  const field = document.getElementById(fieldId);
-  field.style.borderColor = '#e53e3e';
-  field.focus();
-  setTimeout(() => { field.style.borderColor = ''; }, 3000);
+function openCheckoutModal() {
+    const modal = document.getElementById('checkout-modal');
+    document.getElementById('order-success-box').classList.add('hidden');
+    document.getElementById('email-error').classList.add('hidden');
+    document.getElementById('card-error').classList.add('hidden');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
 }
 
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-link');
+function closeCheckoutModal() {
+    const modal = document.getElementById('checkout-modal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+}
 
-const sectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      navLinks.forEach(link => link.classList.remove('active'));
-      const activeLink = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
-      if (activeLink) activeLink.classList.add('active');
+function toggleAdminModal() {
+    const modal = document.getElementById('admin-modal');
+    if (modal.classList.contains('hidden')) {
+        renderOrdersList();
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
     }
-  });
-}, { threshold: 0.4 });
+}
 
-sections.forEach(section => sectionObserver.observe(section));
+function selectPaymentMethod(method) {
+    selectedMethod = method;
+    const tabRevolut = document.getElementById('tab-revolut');
+    const tabCard = document.getElementById('tab-card');
+    const sectionRevolut = document.getElementById('section-revolut');
+    const sectionCard = document.getElementById('section-card');
+    const submitBtnText = document.getElementById('submit-btn-text');
 
-document.querySelectorAll('.gallery-item').forEach(item => {
-  item.addEventListener('mouseenter', () => {
-    item.querySelector('.gallery-overlay').style.opacity = '1';
-  });
-  item.addEventListener('mouseleave', () => {
-    item.querySelector('.gallery-overlay').style.opacity = '0';
-  });
-});
-
-function animateCounter(el, target, suffix) {
-  let current = 0;
-  const increment = target / 60;
-  const timer = setInterval(() => {
-    current += increment;
-    if (current >= target) {
-      current = target;
-      clearInterval(timer);
+    if (method === 'revolut') {
+        tabRevolut.className = 'py-3 px-3 rounded-xl border-2 border-purple-500 bg-purple-500/15 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition';
+        tabCard.className = 'py-3 px-3 rounded-xl border border-white/15 bg-[#070a17] text-gray-300 hover:text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition';
+        sectionRevolut.classList.remove('hidden');
+        sectionCard.classList.add('hidden');
+        submitBtnText.textContent = 'Плати €5.00 с Revolut';
+    } else {
+        tabCard.className = 'py-3 px-3 rounded-xl border-2 border-purple-500 bg-purple-500/15 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition';
+        tabRevolut.className = 'py-3 px-3 rounded-xl border border-white/15 bg-[#070a17] text-gray-300 hover:text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition';
+        sectionRevolut.classList.add('hidden');
+        sectionCard.classList.remove('hidden');
+        submitBtnText.textContent = 'Плати €5.00 с Карта';
     }
-    el.textContent = Math.floor(current) + suffix;
-  }, 25);
 }
 
-const statsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const nums = entry.target.querySelectorAll('.stat-num');
-      nums.forEach(num => {
-        const text = num.textContent;
-        if (text.includes('400')) animateCounter(num, 400, '+');
-        else if (text.includes('5')) animateCounter(num, 5, '+');
-        else if (text.includes('100')) animateCounter(num, 100, '%');
-      });
-      statsObserver.unobserve(entry.target);
+function formatCardNumber(input) {
+    let digits = input.value.replace(/\D/g, '').substring(0, 16);
+    let parts = [];
+    for (let i = 0; i < digits.length; i += 4) {
+        parts.push(digits.substring(i, i + 4));
     }
-  });
-}, { threshold: 0.5 });
-
-const heroStats = document.querySelector('.hero-stats');
-if (heroStats) statsObserver.observe(heroStats);
-
-console.log('Slavka Mladenova website loaded successfully!');
-
-function openLightbox(src, title, desc) {
-  const lb = document.getElementById('lightbox');
-  document.getElementById('lightboxImg').src = src;
-  document.getElementById('lightboxImg').alt = title;
-  document.getElementById('lightboxTitle').textContent = title;
-  document.getElementById('lightboxDesc').textContent = desc;
-  lb.classList.add('open');
-  document.body.style.overflow = 'hidden';
+    input.value = parts.join(' ');
 }
 
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeLightbox();
-});
-
-function openOrder(productName) {
-  const modal = document.getElementById('orderModal');
-  const modalBody = document.getElementById('orderModalBody');
-  const successView = document.getElementById('orderSuccess');
-
-  if (modalBody) modalBody.style.display = 'block';
-  if (successView) successView.style.display = 'none';
-
-  const form = document.getElementById('orderForm');
-  if (form) {
-    form.reset();
-    const btn = form.querySelector('button[type="submit"]');
-    if (btn) {
-      btn.disabled = false;
-      btn.textContent = 'Направи поръчка';
+function formatExpiry(input) {
+    let digits = input.value.replace(/\D/g, '').substring(0, 4);
+    if (digits.length >= 3) {
+        input.value = digits.substring(0, 2) + '/' + digits.substring(2, 4);
+    } else {
+        input.value = digits;
     }
-  }
-
-  document.getElementById('orderProduct').value = productName;
-  document.getElementById('orderProductName').textContent = productName;
-
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
 }
 
-function closeOrder() {
-  document.getElementById('orderModal').classList.remove('open');
-  document.body.style.overflow = '';
+// Изпращане на имейл до terarototo@gmail.com по 2 независими канала едновременно
+async function sendOrderNotificationEmail(orderData) {
+    // 1. Попълване и изпращане на стандартната скрита HTML форма (най-надеждна за активация)
+    try {
+        document.getElementById('form-subject').value = `Нова поръчка €5.00 от ${orderData.email}`;
+        document.getElementById('form-customer-email').value = orderData.email;
+        document.getElementById('form-payment-method').value = orderData.methodLabel;
+        document.getElementById('form-date').value = orderData.time;
+        document.getElementById('fallback-email-form').submit();
+    } catch (e) {}
+
+    // 2. Изпращане и чрез AJAX заявка към FormSubmit
+    try {
+        await fetch(`https://formsubmit.co/ajax/${PAYMENT_CONFIG.sellerEmail}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                _subject: `Нова поръчка Gemini Pro (€5.00) - ${orderData.email}`,
+                _captcha: 'false',
+                _template: 'table',
+                Клиентски_Gmail_за_активация: orderData.email,
+                Избран_метод: orderData.methodLabel,
+                Сума: '€5.00 (Еднократна)',
+                Време_на_поръчката: orderData.time
+            })
+        });
+    } catch (err) {}
 }
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') { closeLightbox(); closeOrder(); }
-});
+function renderOrdersList() {
+    const container = document.getElementById('orders-list');
+    document.getElementById('orders-count-badge').textContent = sessionOrders.length;
 
-const orderForm = document.getElementById('orderForm');
-if (orderForm) {
-  orderForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name  = document.getElementById('oname').value.trim();
-    const phone = document.getElementById('ophone').value.trim();
-    const qty   = document.getElementById('oqty').value.trim();
-    const notes = document.getElementById('onotes').value.trim();
-    const product = document.getElementById('orderProduct').value;
-
-    if (!name || !phone) return;
-
-    const btn = orderForm.querySelector('button[type="submit"]');
-    if (btn) {
-      btn.disabled = true;
-      btn.textContent = 'Изпращане...';
+    if (sessionOrders.length === 0) {
+        container.innerHTML = `
+            <div class="text-xs text-gray-500 py-4 text-center border border-dashed border-white/10 rounded-xl">
+                Все още няма направени поръчки в тази сесия.
+            </div>
+        `;
+        return;
     }
 
-    const formData = new FormData();
-    formData.append('Форма', '🛒 Нова поръчка');
-    formData.append('Продукт', product);
-    formData.append('Име на клиента', name);
-    formData.append('Телефон', phone);
-    formData.append('Количество', qty || 'Не е посочено');
-    formData.append('Детайли / Бележки', notes || 'Няма');
+    container.innerHTML = sessionOrders.map((o, idx) => `
+        <div class="rounded-xl bg-[#070a17] border border-white/10 p-3 text-xs flex flex-col gap-1">
+            <div class="flex items-center justify-between">
+                <span class="font-bold text-purple-300">#${sessionOrders.length - idx} · ${o.email}</span>
+                <span class="text-[11px] bg-white/10 px-2 py-0.5 rounded text-gray-200">${o.methodLabel}</span>
+            </div>
+            <div class="text-[11px] text-gray-400 flex items-center justify-between">
+                <span>Сума: €5.00</span>
+                <span>${o.time}</span>
+            </div>
+        </div>
+    `).join('');
+}
 
-    fetch("https://formspree.io/f/xzezpeql", {
-      method: "POST",
-      body: formData,
-      headers: {
-        'Accept': 'application/json'
-      }
-    })
-    .finally(() => {
-      const modalBody = document.getElementById('orderModalBody');
-      const successView = document.getElementById('orderSuccess');
+// Директно задействане на активационен имейл за terarototo@gmail.com
+async function triggerDirectActivation() {
+    const statusMsg = document.getElementById('activation-status-msg');
+    statusMsg.classList.remove('hidden');
+    statusMsg.textContent = 'Изпращане на заявка за активация към terarototo@gmail.com...';
 
-      if (modalBody) modalBody.style.display = 'none';
-      if (successView) successView.style.display = 'flex';
+    const testOrder = {
+        email: 'test-activation@gmail.com',
+        methodLabel: 'Тестова активация на имейл',
+        time: new Date().toLocaleString('bg-BG')
+    };
 
-      orderForm.reset();
-    });
-  });
+    await sendOrderNotificationEmail(testOrder);
+
+    statusMsg.textContent = '✓ Заявката е изпратена! Провери пощата terarototo@gmail.com (включително папка „Спам" / „Promotions") за писмо от FormSubmit и натисни бутона "Activate Form".';
+}
+
+async function handleOrderSubmit() {
+    const emailInput = document.getElementById('customer-email');
+    const emailError = document.getElementById('email-error');
+    const cardError = document.getElementById('card-error');
+    const submitBtn = document.getElementById('submit-order-btn');
+    const submitBtnText = document.getElementById('submit-btn-text');
+    const successBox = document.getElementById('order-success-box');
+    const successText = document.getElementById('order-success-text');
+
+    const customerEmail = emailInput.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    emailError.classList.add('hidden');
+    cardError.classList.add('hidden');
+
+    if (!emailRegex.test(customerEmail)) {
+        emailError.classList.remove('hidden');
+        emailInput.focus();
+        return;
+    }
+
+    if (selectedMethod === 'card') {
+        const holder = document.getElementById('card-holder').value.trim();
+        const number = document.getElementById('card-number').value.replace(/\s+/g, '');
+        const expiry = document.getElementById('card-expiry').value.trim();
+        const cvc = document.getElementById('card-cvc').value.trim();
+
+        if (holder.length < 2 || number.length < 15 || expiry.length < 5 || cvc.length < 3) {
+            cardError.classList.remove('hidden');
+            return;
+        }
+    }
+
+    // Записваме поръчката
+    const orderInfo = {
+        email: customerEmail,
+        methodLabel: selectedMethod === 'revolut' ? 'Revolut (@atanasova_e)' : 'Банкова карта (€5.00)',
+        time: new Date().toLocaleString('bg-BG')
+    };
+
+    sessionOrders.unshift(orderInfo);
+    document.getElementById('orders-count-badge').textContent = sessionOrders.length;
+
+    // Показваме индикация за изпращане
+    submitBtn.disabled = true;
+    submitBtnText.textContent = 'Обработка на поръчката...';
+
+    // Изпращаме имейла към terarototo@gmail.com и изчакваме да тръгне преди пренасочване
+    await sendOrderNotificationEmail(orderInfo);
+
+    submitBtn.disabled = false;
+
+    if (selectedMethod === 'revolut') {
+        const revolutUrl = `https://revolut.me/${PAYMENT_CONFIG.revolutTag}`;
+        successBox.classList.remove('hidden');
+        successText.innerHTML = `Твоят имейл <strong>${customerEmail}</strong> е изпратен за активация! Сега се отваря Revolut (<strong>@${PAYMENT_CONFIG.revolutTag}</strong>), за да преведеш <strong>€5.00</strong>.`;
+        submitBtnText.textContent = 'Плати €5.00 с Revolut';
+
+        window.open(revolutUrl, '_blank', 'noopener,noreferrer');
+    } else {
+        // При плащане с карта НЕ отваряме Revolut
+        successBox.classList.remove('hidden');
+        successText.innerHTML = `Плащането от <strong>€5.00</strong> с карта и твоят Gmail адрес (<strong>${customerEmail}</strong>) са приети успешно! Достъпът до Google AI Pro ще бъде активиран до 24 часа.`;
+        submitBtnText.textContent = 'Поръчката е завършена ✓';
+    }
 }

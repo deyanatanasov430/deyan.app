@@ -1,0 +1,94 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #060814;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* Tech background grid */
+.bg-grid-pattern {
+    background-image: 
+        linear-gradient(to right, rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+}
+
+/* Floating cyber symbols */
+.cyber-symbol {
+    position: absolute;
+    color: rgba(56, 189, 248, 0.12);
+    font-weight: 700;
+    user-select: none;
+    pointer-events: none;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+}
+
+/* Glowing orbit effect */
+.orbit-ring {
+    position: absolute;
+    width: 390px;
+    height: 170px;
+    border-radius: 50%;
+    border: 2px solid rgba(168, 85, 247, 0.75);
+    box-shadow: 
+        0 0 25px rgba(168, 85, 247, 0.6),
+        inset 0 0 20px rgba(59, 130, 246, 0.5);
+    transform: rotate(-16deg);
+    pointer-events: none;
+}
+
+/* Floating glass icon cards */
+.floating-icon {
+    background: rgba(255, 255, 255, 0.09);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.35);
+    animation: floatSlow 4s ease-in-out infinite;
+}
+.floating-icon:nth-child(2) { animation-delay: 0.7s; }
+.floating-icon:nth-child(3) { animation-delay: 1.4s; }
+.floating-icon:nth-child(4) { animation-delay: 2.1s; }
+.floating-icon:nth-child(5) { animation-delay: 2.8s; }
+
+@keyframes floatSlow {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-7px); }
+}
+
+/* 3D Phone Mockup */
+.phone-3d {
+    transform: perspective(1000px) rotateY(-16deg) rotateX(6deg) rotateZ(-2deg);
+    box-shadow: 
+        -18px 25px 50px rgba(0, 0, 0, 0.85),
+        0 0 40px rgba(139, 92, 246, 0.35),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.18);
+    transition: transform 0.4s ease;
+}
+.phone-3d:hover {
+    transform: perspective(1000px) rotateY(-10deg) rotateX(3deg) rotateZ(-1deg) scale(1.02);
+}
+
+/* Podium at bottom of phone */
+.podium-base {
+    background: linear-gradient(180deg, rgba(168, 85, 247, 0.45) 0%, rgba(79, 70, 229, 0.85) 100%);
+    box-shadow: 
+        0 -5px 35px rgba(168, 85, 247, 0.65),
+        0 15px 40px rgba(0, 0, 0, 0.9);
+}
+.podium-top {
+    background: radial-gradient(circle, #e9d5ff 0%, #a855f7 60%, #6366f1 100%);
+    box-shadow: 0 0 30px rgba(216, 180, 254, 0.8);
+}
+
+/* Buy CTA gradient matching screenshot */
+.btn-buy-gradient {
+    background: linear-gradient(90deg, #60a5fa 0%, #818cf8 50%, #a855f7 100%);
+    box-shadow: 0 8px 30px rgba(129, 140, 248, 0.4);
+    transition: all 0.25s ease;
+}
+.btn-buy-gradient:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(168, 85, 247, 0.6);
+}
