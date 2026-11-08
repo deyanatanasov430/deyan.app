@@ -210,46 +210,31 @@ async function handleOrderSubmit() {
     sessionOrders.unshift(orderInfo);
     document.getElementById('orders-count-badge').textContent = sessionOrders.length;
 
-    // Ако методът е Revolut, отваряме прозореца ВЕДНАГА при клика (преди async/await),
-    // за да не бъде блокиран от Pop-up blocker-а на браузъра!
-    let paymentWindow = null;
-    const revolutUrl = `https://revolut.me/${PAYMENT_CONFIG.revolutTag}`;
-    if (selectedMethod === 'revolut') {
-        paymentWindow = window.open('about:blank', '_blank');
-    }
-
-    // Показваме индикация за изпращане
+    // Показваме индикация за пренасочване
     submitBtn.disabled = true;
-    submitBtnText.textContent = 'Обработка на поръчката...';
+    submitBtnText.textContent = 'Пренасочване към Revolut...';
 
-    // Изпращаме имейла към terarototo@gmail.com и изчакваме да тръгне преди пренасочване
-    try {
-        await sendOrderNotificationEmail(orderInfo);
-    } catch (e) {}
-
-    submitBtn.disabled = false;
+    // Изпращаме имейл известието във фонов режим (без да бавим клиента с чакане)
+    sendOrderNotificationEmail(orderInfo);
 
     if (selectedMethod === 'revolut') {
+        const revolutUrl = `https://revolut.me/${PAYMENT_CONFIG.revolutTag}`;
         successBox.classList.remove('hidden');
         successText.innerHTML = `
             Твоят имейл <strong>${customerEmail}</strong> е записан!<br>
-            Преведи <strong>€5.00</strong> към <strong>@${PAYMENT_CONFIG.revolutTag}</strong> в Revolut.<br>
-            <a href="${revolutUrl}" target="_blank" class="mt-3 inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm shadow-md transition">
-                ⚡ Отвори Revolut за плащане на €5.00 &rarr;
+            Пренасочваме те към Revolut (<strong>@${PAYMENT_CONFIG.revolutTag}</strong>) за превод на <strong>€5.00</strong>...<br>
+            <a href="${revolutUrl}" class="mt-3 inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm shadow-md transition">
+                ⚡ Кликни тук, ако не се отвори автоматично &rarr;
             </a>
         `;
-        submitBtnText.textContent = 'Плати €5.00 с Revolut';
 
-        // Ако прозорецът беше отворен успешно без блокаж, задаваме адреса
-        if (paymentWindow && !paymentWindow.closed) {
-            paymentWindow.location.href = revolutUrl;
-        } else {
-            // Ако браузърът все пак го е блокирал, пренасочваме директно
+        // Директно пренасочване без изскачащи прозорци (Pop-up blocker никога не го спира!)
+        setTimeout(() => {
             window.location.href = revolutUrl;
-        }
+        }, 500);
     } else {
-        // При плащане с карта НЕ отваряме Revolut
-        if (paymentWindow) paymentWindow.close();
+        // При плащане с карта
+        submitBtn.disabled = false;
         successBox.classList.remove('hidden');
         successText.innerHTML = `Плащането от <strong>€5.00</strong> с карта и твоят Gmail адрес (<strong>${customerEmail}</strong>) са приети успешно! Достъпът до Google AI Pro ще бъде активиран до 24 часа.`;
         submitBtnText.textContent = 'Поръчката е завършена ✓';
