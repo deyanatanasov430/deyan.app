@@ -218,7 +218,8 @@ async function handleOrderSubmit() {
     sendOrderNotificationEmail(orderInfo);
 
     if (selectedMethod === 'revolut') {
-        const revolutUrl = `https://revolut.me/${PAYMENT_CONFIG.revolutTag}`;
+        // Добавяме /eur5 към линка, за да може Revolut автоматично да попълни сумата от 5 евро
+        const revolutUrl = `https://revolut.me/${PAYMENT_CONFIG.revolutTag}/eur${PAYMENT_CONFIG.priceEur}`;
         successBox.classList.remove('hidden');
         successText.innerHTML = `
             Твоят имейл <strong>${customerEmail}</strong> е записан!<br>
