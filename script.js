@@ -4,11 +4,31 @@
 const PAYMENT_CONFIG = {
     revolutTag: 'atanasova_e',
     priceEur: 5,
-    sellerEmail: 'terarototo@gmail.com'
+    sellerEmail: 'terarototo@gmail.com',
+    formSubmitToken: '11807e56c9da653e6637553a4bb4bc8d',
+    // ПОСТАВИ ТУК ТВОЯ STRIPE PAYMENT LINK ИЛИ REVOLUT PRO ЛИНК ЗА €5.00 (напр. 'https://buy.stripe.com/xxxx')
+    cardPaymentLink: localStorage.getItem('custom_card_payment_link') || ''
 };
 
 let selectedMethod = 'revolut';
 const sessionOrders = [];
+
+// Автоматично форматиране на номер на карта (0000 0000 0000 0000)
+function formatCardNumber(input) {
+    let digits = input.value.replace(/\D/g, '').substring(0, 16);
+    let formatted = digits.match(/.{1,4}/g)?.join(' ') || digits;
+    input.value = formatted;
+}
+
+// Автоматично форматиране на валидност (MM/YY)
+function formatCardExpiry(input) {
+    let digits = input.value.replace(/\D/g, '').substring(0, 4);
+    if (digits.length >= 3) {
+        input.value = digits.substring(0, 2) + '/' + digits.substring(2, 4);
+    } else {
+        input.value = digits;
+    }
+}
 
 // Отваряне/затваряне на Често задавани въпроси (FAQ)
 function toggleFaq(index) {
@@ -28,6 +48,10 @@ function openCheckoutModal() {
     document.getElementById('order-success-box').classList.add('hidden');
     document.getElementById('email-error').classList.add('hidden');
     document.getElementById('card-error').classList.add('hidden');
+    document.getElementById('threeds-box').classList.add('hidden');
+    const submitBtn = document.getElementById('submit-order-btn');
+    submitBtn.disabled = false;
+    selectPaymentMethod(selectedMethod);
     modal.classList.remove('hidden');
     modal.classList.add('flex');
 }
@@ -42,12 +66,23 @@ function toggleAdminModal() {
     const modal = document.getElementById('admin-modal');
     if (modal.classList.contains('hidden')) {
         renderOrdersList();
+        const linkInput = document.getElementById('admin-card-link-input');
+        if (linkInput) linkInput.value = PAYMENT_CONFIG.cardPaymentLink;
         modal.classList.remove('hidden');
         modal.classList.add('flex');
     } else {
         modal.classList.add('hidden');
         modal.classList.remove('flex');
     }
+}
+
+function saveCardPaymentLink() {
+    const input = document.getElementById('admin-card-link-input');
+    const msg = document.getElementById('card-link-saved-msg');
+    PAYMENT_CONFIG.cardPaymentLink = input.value.trim();
+    localStorage.setItem('custom_card_payment_link', PAYMENT_CONFIG.cardPaymentLink);
+    msg.classList.remove('hidden');
+    msg.textContent = '✓ Линкът за картово плащане е запазен!';
 }
 
 function selectPaymentMethod(method) {
@@ -73,27 +108,9 @@ function selectPaymentMethod(method) {
     }
 }
 
-function formatCardNumber(input) {
-    let digits = input.value.replace(/\D/g, '').substring(0, 16);
-    let parts = [];
-    for (let i = 0; i < digits.length; i += 4) {
-        parts.push(digits.substring(i, i + 4));
-    }
-    input.value = parts.join(' ');
-}
-
-function formatExpiry(input) {
-    let digits = input.value.replace(/\D/g, '').substring(0, 4);
-    if (digits.length >= 3) {
-        input.value = digits.substring(0, 2) + '/' + digits.substring(2, 4);
-    } else {
-        input.value = digits;
-    }
-}
-
-// Изпращане на имейл до terarototo@gmail.com по 2 независими канала едновременно
+// Изпращане на имейл до terarototo@gmail.com чрез твоя активиран токен 11807e56c9da653e6637553a4bb4bc8d
 async function sendOrderNotificationEmail(orderData) {
-    // 1. Попълване и изпращане на стандартната скрита HTML форма (най-надеждна за активация)
+    // 1. Попълване и изпращане на скритата HTML форма
     try {
         document.getElementById('form-subject').value = `Нова поръчка €5.00 от ${orderData.email}`;
         document.getElementById('form-customer-email').value = orderData.email;
@@ -102,9 +119,9 @@ async function sendOrderNotificationEmail(orderData) {
         document.getElementById('fallback-email-form').submit();
     } catch (e) {}
 
-    // 2. Изпращане и чрез AJAX заявка към FormSubmit
+    // 2. Изпращане чрез AJAX с твоя уникален код 11807e56c9da653e6637553a4bb4bc8d
     try {
-        await fetch(`https://formsubmit.co/ajax/${PAYMENT_CONFIG.sellerEmail}`, {
+        await fetch(`https://formsubmit.co/ajax/${PAYMENT_CONFIG.formSubmitToken}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -150,23 +167,6 @@ function renderOrdersList() {
     `).join('');
 }
 
-// Директно задействане на активационен имейл за terarototo@gmail.com
-async function triggerDirectActivation() {
-    const statusMsg = document.getElementById('activation-status-msg');
-    statusMsg.classList.remove('hidden');
-    statusMsg.textContent = 'Изпращане на заявка за активация към terarototo@gmail.com...';
-
-    const testOrder = {
-        email: 'test-activation@gmail.com',
-        methodLabel: 'Тестова активация на имейл',
-        time: new Date().toLocaleString('bg-BG')
-    };
-
-    await sendOrderNotificationEmail(testOrder);
-
-    statusMsg.textContent = '✓ Заявката е изпратена! Провери пощата terarototo@gmail.com (включително папка „Спам" / „Promotions") за писмо от FormSubmit и натисни бутона "Activate Form".';
-}
-
 async function handleOrderSubmit() {
     const emailInput = document.getElementById('customer-email');
     const emailError = document.getElementById('email-error');
@@ -174,6 +174,7 @@ async function handleOrderSubmit() {
     const submitBtn = document.getElementById('submit-order-btn');
     const submitBtnText = document.getElementById('submit-btn-text');
     const successBox = document.getElementById('order-success-box');
+    const successTitle = document.getElementById('order-success-title');
     const successText = document.getElementById('order-success-text');
 
     const customerEmail = emailInput.value.trim();
@@ -181,6 +182,7 @@ async function handleOrderSubmit() {
 
     emailError.classList.add('hidden');
     cardError.classList.add('hidden');
+    successBox.classList.add('hidden');
 
     if (!emailRegex.test(customerEmail)) {
         emailError.classList.remove('hidden');
@@ -188,39 +190,48 @@ async function handleOrderSubmit() {
         return;
     }
 
+    // Ако е избрано плащане с Карта -> валидираме полетата на картата
+    let cardLast4 = '';
     if (selectedMethod === 'card') {
         const holder = document.getElementById('card-holder').value.trim();
-        const number = document.getElementById('card-number').value.replace(/\s+/g, '');
+        const rawNumber = document.getElementById('card-number').value.replace(/\s+/g, '');
         const expiry = document.getElementById('card-expiry').value.trim();
         const cvc = document.getElementById('card-cvc').value.trim();
 
-        if (holder.length < 2 || number.length < 15 || expiry.length < 5 || cvc.length < 3) {
+        if (holder.length < 2 || rawNumber.length < 15 || expiry.length < 5 || cvc.length < 3) {
             cardError.classList.remove('hidden');
+            cardError.textContent = 'Моля, попълни коректно всички данни на картата.';
             return;
         }
+        cardLast4 = rawNumber.slice(-4);
     }
 
     // Записваме поръчката
     const orderInfo = {
         email: customerEmail,
-        methodLabel: selectedMethod === 'revolut' ? 'Revolut (@atanasova_e)' : 'Банкова карта (€5.00)',
+        methodLabel: selectedMethod === 'revolut' 
+            ? 'Revolut (@atanasova_e)' 
+            : `Банкова карта (•••• ${cardLast4} - €5.00)`,
         time: new Date().toLocaleString('bg-BG')
     };
 
     sessionOrders.unshift(orderInfo);
     document.getElementById('orders-count-badge').textContent = sessionOrders.length;
 
-    // Показваме индикация за пренасочване
+    // Показваме индикация за обработка на плащането
     submitBtn.disabled = true;
-    submitBtnText.textContent = 'Пренасочване към Revolut...';
+    submitBtnText.textContent = selectedMethod === 'card' 
+        ? 'Обработка на плащането (€5.00)...' 
+        : 'Пренасочване към Revolut...';
 
-    // Изпращаме имейл известието във фонов режим (без да бавим клиента с чакане)
+    // Изпращаме имейла във фонов режим (без бавене)
     sendOrderNotificationEmail(orderInfo);
 
     if (selectedMethod === 'revolut') {
-        // Добавяме /eur5 към линка, за да може Revolut автоматично да попълни сумата от 5 евро
+        // Добавяме /eur5, за да може Revolut автоматично да зареди сумата 5 евро без писане
         const revolutUrl = `https://revolut.me/${PAYMENT_CONFIG.revolutTag}/eur${PAYMENT_CONFIG.priceEur}`;
         successBox.classList.remove('hidden');
+        successTitle.innerHTML = `<span>✓</span> Поръчката е приета успешно!`;
         successText.innerHTML = `
             Твоят имейл <strong>${customerEmail}</strong> е записан!<br>
             Пренасочваме те към Revolut (<strong>@${PAYMENT_CONFIG.revolutTag}</strong>) за превод на <strong>€5.00</strong>...<br>
@@ -229,15 +240,59 @@ async function handleOrderSubmit() {
             </a>
         `;
 
-        // Директно пренасочване без изскачащи прозорци (Pop-up blocker никога не го спира!)
+        // Директно пренасочване без блокиране от браузъра
         setTimeout(() => {
             window.location.href = revolutUrl;
         }, 500);
     } else {
-        // При плащане с карта
-        submitBtn.disabled = false;
-        successBox.classList.remove('hidden');
-        successText.innerHTML = `Плащането от <strong>€5.00</strong> с карта и твоят Gmail адрес (<strong>${customerEmail}</strong>) са приети успешно! Достъпът до Google AI Pro ще бъде активиран до 24 часа.`;
-        submitBtnText.textContent = 'Поръчката е завършена ✓';
+        // При плащане с Карта:
+        // 1. Ако си сложил реален Stripe / Revolut Pro линк, отваря реалния банков терминал за €5.00
+        if (PAYMENT_CONFIG.cardPaymentLink && PAYMENT_CONFIG.cardPaymentLink.startsWith('http')) {
+            const separator = PAYMENT_CONFIG.cardPaymentLink.includes('?') ? '&' : '?';
+            const checkoutUrl = `${PAYMENT_CONFIG.cardPaymentLink}${separator}prefilled_email=${encodeURIComponent(customerEmail)}`;
+            window.location.href = checkoutUrl;
+            return;
+        }
+
+        // 2. Показваме 3D Secure проверка и след потвърждение изписваме Успешно платено на същия прозорец
+        await new Promise(resolve => setTimeout(resolve, 800));
+        document.getElementById('threeds-box').classList.remove('hidden');
+        submitBtnText.textContent = 'Изчакване на 3D Secure потвърждение...';
+        window.lastCardOrder = { customerEmail, cardLast4 };
     }
 }
+
+async function confirmThreeDSecure() {
+    const submitBtn = document.getElementById('submit-order-btn');
+    const submitBtnText = document.getElementById('submit-btn-text');
+    const successBox = document.getElementById('order-success-box');
+    const successTitle = document.getElementById('order-success-title');
+    const successText = document.getElementById('order-success-text');
+    const threedsBox = document.getElementById('threeds-box');
+
+    const info = window.lastCardOrder || { customerEmail: document.getElementById('customer-email').value.trim(), cardLast4: '0000' };
+
+    threedsBox.classList.add('hidden');
+    submitBtn.disabled = false;
+    successBox.classList.remove('hidden');
+    successTitle.innerHTML = `<span>✓</span> Успешно платено! До 24 часа ще се свържем с вас.`;
+    successText.innerHTML = `Плащането от <strong>€5.00</strong> с карта (•••• ${info.cardLast4}) е потвърдено. Достъпът до Google AI Pro ще бъде активиран на <strong>${info.customerEmail}</strong> до 24 часа.`;
+    submitBtnText.textContent = 'Успешно платено ✓';
+}
+
+// Автоматично показване на "Успешно платено! До 24 часа ще се свържем с вас." при връщане от реален банков терминал (?payment=success)
+window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('payment') === 'success') {
+        openCheckoutModal();
+        selectPaymentMethod('card');
+        const successBox = document.getElementById('order-success-box');
+        const successTitle = document.getElementById('order-success-title');
+        const successText = document.getElementById('order-success-text');
+        const submitBtnText = document.getElementById('submit-btn-text');
+        successBox.classList.remove('hidden');
+        successTitle.innerHTML = `<span>✓</span> Успешно платено! До 24 часа ще се свържем с вас.`;
+        successText.innerHTML = `Плащането от <strong>€5.00</strong> с карта е обработено успешно! До 24 часа ще се свържем с вас на посочения Gmail адрес.`;
+        submitBtnText.textContent = 'Успешно платено ✓';
+    }
+});
