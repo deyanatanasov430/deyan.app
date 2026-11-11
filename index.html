@@ -1,809 +1,309 @@
 <!DOCTYPE html>
 <html lang="bg" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google AI Pro (Gemini) — до 18 месеца</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google AI Pro (Gemini) до 18 месеца за €5 – deyan.app</title>
+<meta name="description" content="Google AI Pro (Gemini) до 18 месеца за €5 еднократно. Активира се на твоя личен Gmail, доставка до 24 часа.">
+<meta name="theme-color" content="#060814">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236d5ef0'/%3E%3Cpath d='M16 6l2.8 7.2L26 16l-7.2 2.8L16 26l-2.8-7.2L6 16l7.2-2.8z' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body class="min-h-screen flex flex-col bg-grid-pattern relative selection:bg-purple-500 selection:text-white">
 
-    <!-- Декоративни фонови символи като на снимката -->
-    <div class="cyber-symbol top-28 left-8">メ<br>ヤ</div>
-    <div class="cyber-symbol top-32 left-1/4">ア<br>ニ<br>メ</div>
-    <div class="cyber-symbol top-24 left-1/2">ツ<br>タ<br>サ</div>
-    <div class="cyber-symbol bottom-24 left-10">カ<br>キ</div>
-    <div class="cyber-symbol top-40 right-12">シ<br>ス</div>
+<!-- Декоративни фонови символи -->
+<div aria-hidden="true">
+  <div class="cyber-symbol top-28 left-8">メ<br>ヤ</div>
+  <div class="cyber-symbol top-32 left-1/4">ア<br>ニ<br>メ</div>
+  <div class="cyber-symbol top-24 left-1/2">ツ<br>タ<br>サ</div>
+  <div class="cyber-symbol bottom-24 left-10">カ<br>キ</div>
+  <div class="cyber-symbol top-40 right-12">シ<br>ス</div>
+</div>
 
-    <!-- ГОРЕН ПРОМО БАНЕР -->
-    <div class="w-full bg-gradient-to-r from-[#130d26] via-[#25144a] to-[#130d26] border-b border-purple-500/25 py-2.5 px-4 text-xs sm:text-sm">
-        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-center">
-            <span class="inline-flex items-center gap-1.5 font-semibold text-purple-200">
-                <svg class="w-4 h-4 text-purple-400" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2L14.8 9.2L22 12L14.8 14.8L12 22L9.2 14.8L2 12L9.2 9.2L12 2Z"/>
-                </svg>
-                <span class="text-purple-300 font-bold">Google AI Pro</span>
-                <span class="text-white font-bold">за 18 месеца</span>
-            </span>
-            <span class="hidden sm:inline text-gray-500">|</span>
-            <span class="text-gray-300">Офертата още е активна</span>
-            <span class="bg-[#1b1336] border border-purple-400/30 text-white font-bold px-2.5 py-0.5 rounded-md text-xs">
-                Последни бройки
-            </span>
-            <button onclick="openCheckoutModal()" class="bg-gradient-to-r from-purple-500 to-fuchsia-500 hover:from-purple-400 hover:to-fuchsia-400 text-white font-bold px-3.5 py-1 rounded-full text-xs transition shadow-md shadow-purple-500/20">
-                Вземи AI Pro &rarr;
-            </button>
+<!-- Горен банер -->
+<div class="w-full bg-gradient-to-r from-[#130d26] via-[#25144a] to-[#130d26] border-b border-purple-500/25 py-2.5 px-4 text-xs sm:text-sm">
+  <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-center">
+    <span class="inline-flex items-center gap-1.5 font-semibold text-purple-200">
+      <svg class="w-4 h-4 text-purple-400" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2L14.8 9.2L22 12L14.8 14.8L12 22L9.2 14.8L2 12L9.2 9.2L12 2Z"/></svg>
+      <span class="text-purple-300 font-bold">Google AI Pro</span>
+      <span class="text-white font-bold">до 18 месеца</span>
+    </span>
+    <span class="hidden sm:inline text-gray-500">|</span>
+    <span class="text-gray-300">Еднократно €5, без месечно таксуване</span>
+    <a href="#order" class="js-buy bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-bold px-3.5 py-1 rounded-full text-xs transition shadow-md shadow-purple-500/20">Вземи AI Pro &rarr;</a>
+  </div>
+</div>
+
+<!-- Навигация -->
+<header class="w-full border-b border-white/5 bg-[#070a18]/80 backdrop-blur-md sticky top-0 z-30">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-2.5">
+      <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/25">
+        <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2L14.8 9.2L22 12L14.8 14.8L12 22L9.2 14.8L2 12L9.2 9.2L12 2Z"/></svg>
+      </span>
+      <span class="font-extrabold text-lg tracking-tight text-white">GEMINI <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">PRO</span></span>
+    </a>
+    <a href="#order" class="js-buy px-4 py-1.5 rounded-lg border border-cyan-400/60 text-cyan-300 hover:bg-cyan-400/10 font-bold text-xs sm:text-sm tracking-wider uppercase transition">Вземи достъп</a>
+  </div>
+</header>
+
+<main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col gap-20 sm:gap-24">
+
+  <!-- ОФЕРТА -->
+  <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-7 w-full items-stretch">
+
+    <!-- Визуализация: телефон + орбита -->
+    <div aria-hidden="true" class="lg:col-span-6 relative rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-b from-[#2c1250] via-[#1c0c3b] to-[#0d0620] min-h-[470px] sm:min-h-[540px] flex flex-col items-center justify-end p-6 shadow-2xl">
+      <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-purple-500/30 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute bottom-12 left-1/2 -translate-x-1/2 w-72 h-40 bg-blue-500/25 rounded-full blur-2xl pointer-events-none"></div>
+      <div class="orbit-ring top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-[16deg] scale-75 sm:scale-100"></div>
+
+      <div class="floating-icon absolute top-[38%] left-[14%] sm:left-[16%] w-11 h-11 rounded-xl flex items-center justify-center text-pink-300 z-20">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg>
+      </div>
+      <div class="floating-icon absolute bottom-[32%] left-[7%] sm:left-[9%] w-11 h-11 rounded-xl flex items-center justify-center text-purple-200 z-20" style="animation-delay:.7s">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </div>
+      <div class="floating-icon absolute bottom-[20%] left-[21%] sm:left-[23%] w-11 h-11 rounded-xl flex items-center justify-center text-pink-300 z-20" style="animation-delay:1.4s">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+      <div class="floating-icon absolute top-[28%] right-[16%] sm:right-[18%] w-12 h-12 rounded-xl flex items-center justify-center text-fuchsia-300 z-20" style="animation-delay:2.1s">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+      </div>
+      <div class="floating-icon absolute top-[43%] right-[6%] sm:right-[8%] w-11 h-11 rounded-xl flex items-center justify-center text-blue-200 z-20" style="animation-delay:2.8s">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+      </div>
+      <div class="floating-icon absolute bottom-[27%] right-[16%] sm:right-[19%] w-11 h-11 rounded-xl flex items-center justify-center text-pink-200 z-20" style="animation-delay:3.5s">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+      </div>
+
+      <!-- Смартфон -->
+      <div class="phone-3d relative z-10 w-[195px] sm:w-[210px] h-[365px] sm:h-[385px] bg-[#090812] rounded-[32px] p-2.5 border-2 border-gray-600/60 flex flex-col justify-between mb-6">
+        <div>
+          <div class="w-16 h-3.5 bg-black rounded-full mx-auto mb-2.5 flex items-center justify-end px-2"><span class="w-1.5 h-1.5 rounded-full bg-indigo-900"></span></div>
+          <div class="flex items-center justify-between px-2 py-1">
+            <span class="text-xs font-bold text-gray-200 tracking-wide">Gemini</span>
+            <span class="w-5 h-5 rounded-full bg-gradient-to-tr from-purple-400 to-blue-400 flex items-center justify-center text-[10px] font-bold">★</span>
+          </div>
+          <div class="text-center mt-3 mb-3 px-2">
+            <h3 class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-300 to-pink-300">Hello!</h3>
+            <p class="text-[10px] text-gray-400 mt-0.5">How can I help you today?</p>
+          </div>
+          <div class="mx-1.5 mb-2.5 px-2.5 py-1.5 rounded-full bg-white/10 border border-purple-400/40 flex items-center justify-between">
+            <span class="text-[9px] text-gray-300">Ask me anything...</span>
+            <span class="w-4 h-4 rounded-full bg-purple-500 flex items-center justify-center text-[8px]">▶</span>
+          </div>
+          <div class="space-y-1.5 px-1.5">
+            <div class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[9px] text-gray-300 flex items-center gap-1.5"><span class="text-purple-400">✦</span> Create something inspiring</div>
+            <div class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[9px] text-gray-300 flex items-center gap-1.5"><span class="text-blue-400">▤</span> Summarize this for me</div>
+            <div class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[9px] text-gray-300 flex items-center gap-1.5"><span class="text-pink-400">⚡</span> Solve a problem</div>
+            <div class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[9px] text-gray-300 flex items-center gap-1.5"><span class="text-indigo-400">💡</span> Give me new ideas</div>
+          </div>
         </div>
+        <div class="border-t border-white/10 pt-2 px-3 flex items-center justify-between text-[8px] text-gray-400">
+          <span class="text-purple-400 font-semibold">● Chat</span><span>✦ Explore</span><span>☰ History</span>
+        </div>
+      </div>
+
+      <!-- Подиум -->
+      <div class="relative w-56 sm:w-64 h-14 -mt-10 z-0 flex flex-col items-center">
+        <div class="podium-top w-full h-7 rounded-[50%] z-10"></div>
+        <div class="podium-base w-full h-9 -mt-3.5 rounded-b-[45%]"></div>
+      </div>
     </div>
 
-    <!-- НАВИГАЦИЯ (Изчистена, без чужди лога и без 4-те линка) -->
-    <header class="w-full border-b border-white/5 bg-[#070a18]/80 backdrop-blur-md sticky top-0 z-30">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-            <a href="#" class="flex items-center gap-2.5 group">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/25">
-                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2L14.8 9.2L22 12L14.8 14.8L12 22L9.2 14.8L2 12L9.2 9.2L12 2Z"/>
-                    </svg>
-                </div>
-                <span class="font-extrabold text-lg tracking-tight text-white">
-                    GEMINI <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">PRO</span>
-                </span>
-            </a>
+    <!-- Детайли за офертата -->
+    <div id="order" class="lg:col-span-6 rounded-2xl border border-white/10 bg-[#0b0f1e]/95 p-6 sm:p-8 flex flex-col justify-between shadow-2xl scroll-mt-24">
+      <div>
+        <h1 class="text-3xl sm:text-4xl font-black tracking-tight leading-tight text-white">
+          Google AI Pro (Gemini)
+          <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 mt-0.5">до 18 месеца</span>
+        </h1>
+        <p class="mt-4 text-base sm:text-lg text-gray-300 leading-relaxed">Достъпът се активира директно на твоя личен Gmail, без споделени пароли и без месечно таксуване.</p>
 
-            <button onclick="openCheckoutModal()" class="px-4 py-1.5 rounded-lg border border-cyan-400/60 text-cyan-300 hover:bg-cyan-400/10 font-bold text-xs sm:text-sm tracking-wider uppercase transition">
-                Вземи Достъп
-            </button>
+        <ul class="mt-6 space-y-3 text-sm sm:text-base text-gray-200">
+          <li class="flex gap-3"><span class="text-emerald-400 font-bold" aria-hidden="true">✓</span>Твоят личен акаунт, не споделен профил</li>
+          <li class="flex gap-3"><span class="text-emerald-400 font-bold" aria-hidden="true">✓</span>Доставка до 24 часа след потвърдено плащане</li>
+          <li class="flex gap-3"><span class="text-emerald-400 font-bold" aria-hidden="true">✓</span>Нова покана или връщане на €5, ако не работи</li>
+        </ul>
+
+        <div class="mt-7 rounded-xl border border-white/10 bg-[#10162b] p-4 sm:p-5">
+          <div class="flex items-baseline gap-3 flex-wrap">
+            <span class="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">€5.00</span>
+            <span class="text-sm font-bold text-blue-400">еднократна цена</span>
+          </div>
+          <p class="text-sm text-gray-400 mt-2 leading-relaxed">Плащаш веднъж за до 18 месеца. Без месечно таксуване.</p>
         </div>
-    </header>
+      </div>
 
-    <!-- ОСНОВНА СЕКЦИЯ НА ПРОДУКТА + СКРОЛВАЩИ СЕКЦИИ НАДОЛУ -->
-    <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col gap-16">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-7 w-full items-stretch">
-
-            <!-- ЛЯВА КАРТА: Визуализация със смартфон и орбита -->
-            <div class="lg:col-span-6 relative rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-b from-[#2c1250] via-[#1c0c3b] to-[#0d0620] min-h-[470px] sm:min-h-[540px] flex flex-col items-center justify-end p-6 shadow-2xl">
-                
-                <!-- Фоново сияние -->
-                <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-purple-500/30 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute bottom-12 left-1/2 -translate-x-1/2 w-72 h-40 bg-blue-500/25 rounded-full blur-2xl pointer-events-none"></div>
-
-                <!-- Светеща орбита -->
-                <div class="orbit-ring top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 scale-75 sm:scale-100"></div>
-
-                <!-- Плаващи икони около телефона -->
-                <!-- 1. Микрофон -->
-                <div class="floating-icon absolute top-[38%] left-[14%] sm:left-[16%] w-11 h-11 rounded-xl flex items-center justify-center text-pink-300 z-20">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/>
-                    </svg>
-                </div>
-
-                <!-- 2. Камера -->
-                <div class="floating-icon absolute bottom-[32%] left-[7%] sm:left-[9%] w-11 h-11 rounded-xl flex items-center justify-center text-purple-200 z-20">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
-                        <circle cx="12" cy="13" r="4"/>
-                    </svg>
-                </div>
-
-                <!-- 3. Чат долу -->
-                <div class="floating-icon absolute bottom-[20%] left-[21%] sm:left-[23%] w-11 h-11 rounded-xl flex items-center justify-center text-pink-300 z-20">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-                    </svg>
-                </div>
-
-                <!-- 4. Чат горе вдясно -->
-                <div class="floating-icon absolute top-[28%] right-[16%] sm:right-[18%] w-12 h-12 rounded-xl flex items-center justify-center text-fuchsia-300 z-20">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                    </svg>
-                </div>
-
-                <!-- 5. Код вдясно -->
-                <div class="floating-icon absolute top-[43%] right-[6%] sm:right-[8%] w-11 h-11 rounded-xl flex items-center justify-center text-blue-200 z-20">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 18l6-6-6-6M8 6l-6 6 6 6"/>
-                    </svg>
-                </div>
-
-                <!-- 6. Идея/Крушка долу вдясно -->
-                <div class="floating-icon absolute bottom-[27%] right-[16%] sm:right-[19%] w-11 h-11 rounded-xl flex items-center justify-center text-pink-200 z-20">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                    </svg>
-                </div>
-
-                <!-- 3D Смартфон -->
-                <div class="phone-3d relative z-10 w-[195px] sm:w-[210px] h-[365px] sm:h-[385px] bg-[#090812] rounded-[32px] p-2.5 border-2 border-gray-600/60 flex flex-col justify-between mb-6">
-                    <!-- Горна част на екрана -->
-                    <div>
-                        <div class="w-16 h-3.5 bg-black rounded-full mx-auto mb-2.5 flex items-center justify-end px-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-900"></span>
-                        </div>
-                        <div class="flex items-center justify-between px-2 py-1">
-                            <span class="text-xs font-bold text-gray-200 tracking-wide">Gemini</span>
-                            <div class="w-5 h-5 rounded-full bg-gradient-to-tr from-purple-400 to-blue-400 flex items-center justify-center text-[10px] font-bold">
-                                ★
-                            </div>
-                        </div>
-
-                        <div class="text-center mt-3 mb-3 px-2">
-                            <h3 class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-300 to-pink-300">
-                                Hello!
-                            </h3>
-                            <p class="text-[10px] text-gray-400 mt-0.5">How can I help you today?</p>
-                        </div>
-
-                        <!-- Търсачка в телефона -->
-                        <div class="mx-1.5 mb-2.5 px-2.5 py-1.5 rounded-full bg-white/10 border border-purple-400/40 flex items-center justify-between">
-                            <span class="text-[9px] text-gray-300">Ask me anything...</span>
-                            <span class="w-4 h-4 rounded-full bg-purple-500 flex items-center justify-center text-[8px]">▶</span>
-                        </div>
-
-                        <!-- Опции в телефона -->
-                        <div class="space-y-1.5 px-1.5">
-                            <div class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[9px] text-gray-300 flex items-center gap-1.5">
-                                <span class="text-purple-400">✦</span> Create something inspiring
-                            </div>
-                            <div class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[9px] text-gray-300 flex items-center gap-1.5">
-                                <span class="text-blue-400">▤</span> Summarize this for me
-                            </div>
-                            <div class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[9px] text-gray-300 flex items-center gap-1.5">
-                                <span class="text-pink-400">⚡</span> Solve a problem
-                            </div>
-                            <div class="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[9px] text-gray-300 flex items-center gap-1.5">
-                                <span class="text-indigo-400">💡</span> Give me new ideas
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Долна навигация на телефона -->
-                    <div class="border-t border-white/10 pt-2 px-3 flex items-center justify-between text-[8px] text-gray-400">
-                        <span class="text-purple-400 font-semibold">● Chat</span>
-                        <span>✦ Explore</span>
-                        <span>☰ History</span>
-                    </div>
-                </div>
-
-                <!-- 3D Подиум под телефона -->
-                <div class="relative w-56 sm:w-64 h-14 -mt-10 z-0 flex flex-col items-center">
-                    <div class="podium-top w-full h-7 rounded-[50%] z-10"></div>
-                    <div class="podium-base w-full h-9 -mt-3.5 rounded-b-[45%]"></div>
-                </div>
-            </div>
-
-            <!-- ДЯСНА КАРТА: Детайли за офертата и покупка -->
-            <div class="lg:col-span-6 rounded-2xl border border-white/10 bg-[#0b0f1e]/95 p-6 sm:p-8 flex flex-col justify-between shadow-2xl">
-                <div>
-                    <!-- Заглавие -->
-                    <h1 class="text-2xl sm:text-4xl font-black tracking-tight leading-tight text-white">
-                        Google AI Pro (Gemini)
-                        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 mt-0.5">
-                            до 18 месеца
-                        </span>
-                    </h1>
-
-                    <!-- Рейтинг -->
-                    <div class="flex items-center gap-2 mt-4 text-sm">
-                        <div class="flex items-center text-amber-400 tracking-tighter text-base">
-                            ★★★★★
-                        </div>
-                        <span class="font-bold text-white">4.8</span>
-                        <span class="text-gray-500">·</span>
-                        <span class="text-gray-300 underline decoration-gray-500 underline-offset-4">201 отзива</span>
-                    </div>
-
-                    <!-- Статус на офертата -->
-                    <div class="flex flex-wrap items-center gap-2 mt-4 pb-5 border-b border-white/10 text-xs sm:text-sm">
-                        <span class="inline-flex items-center gap-1.5 text-gray-300">
-                            <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/>
-                            </svg>
-                            Офертата още е активна
-                        </span>
-                        <span class="bg-[#161c33] border border-white/10 text-white font-bold px-2.5 py-0.5 rounded text-xs">
-                            Последни бройки
-                        </span>
-                    </div>
-
-                    <!-- Цена: 5 ЕВРО -->
-                    <div class="mt-5 flex items-baseline gap-3 flex-wrap">
-                        <span class="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-                            €5.00
-                        </span>
-                        <span class="text-lg sm:text-xl text-gray-500 line-through font-semibold">
-                            €395.64
-                        </span>
-                        <span class="bg-red-500/90 text-white text-xs font-extrabold px-2.5 py-0.5 rounded-full">
-                            -98%
-                        </span>
-                    </div>
-
-                    <!-- Индикатор за покупки днес -->
-                    <div class="mt-2.5 flex items-center gap-2 text-xs sm:text-sm text-gray-300">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span>Днес го взеха <strong class="text-white">5 души</strong> · последна поръчка преди 57 мин</span>
-                    </div>
-
-                    <!-- Кутия за еднократна цена (без /месец) -->
-                    <div class="mt-5 rounded-xl border border-white/10 bg-[#10162b] p-4 sm:p-5">
-                        <div class="flex items-baseline gap-2 flex-wrap">
-                            <span class="text-sm text-gray-300 font-medium">само</span>
-                            <span class="text-2xl sm:text-3xl font-black text-white">€5.00</span>
-                            <span class="text-sm font-bold text-blue-400">еднократна цена</span>
-                        </div>
-                        <p class="text-xs sm:text-sm text-gray-400 mt-1.5 leading-relaxed">
-                            Плащаш веднъж €5.00 за до 18 месеца. Без месечно таксуване.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Бутон Купи -->
-                <div class="mt-6">
-                    <button onclick="openCheckoutModal()" class="btn-buy-gradient w-full py-4 rounded-xl font-extrabold text-white text-base sm:text-lg flex items-center justify-center gap-2.5 cursor-pointer">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
-                        </svg>
-                        Купи за €5.00
-                    </button>
-
-                    <p class="text-xs sm:text-sm text-gray-400 mt-3.5 leading-relaxed">
-                        След плащане ни казваш Gmail адреса си — достъп до 24 часа
-                    </p>
-                </div>
-            </div>
-
+      <div class="mt-7">
+        <div class="mb-3 text-left">
+          <label for="page-email" class="block text-xs font-semibold text-gray-300 mb-1.5">
+            Твоят Gmail адрес (за поканата):
+          </label>
+          <input
+            type="email"
+            id="page-email"
+            placeholder="пример: ivan.petrov@gmail.com"
+            class="input-field"
+          />
         </div>
+        <a href="#how" class="js-buy btn-buy-gradient w-full py-4 rounded-xl font-extrabold text-white text-base sm:text-lg flex items-center justify-center gap-2.5">Поръчай за €5</a>
+        <p class="mt-3 text-center text-xs text-gray-400">Независима услуга, не е свързана с Google. На този сайт не се въвеждат данни на карта.</p>
+      </div>
+    </div>
+  </section>
 
-        <!-- СЕКЦИЯ 1: КАК СЕ ДОСТАВЯ И АКТИВИРА -->
-        <section id="delivery-section" class="w-full pt-4">
-            <div class="text-center max-w-2xl mx-auto mb-10">
-                <span class="inline-block text-xs font-extrabold uppercase tracking-widest text-purple-400 bg-purple-500/10 border border-purple-500/20 px-3 py-1 rounded-full mb-3">
-                    Бързо и лесно
-                </span>
-                <h2 class="text-2xl sm:text-3xl font-black text-white">
-                    Как се доставя и активира?
-                </h2>
-                <p class="text-sm text-gray-400 mt-2">
-                    Без сложни настройки и без споделени пароли — всичко става директно на твоя личен Gmail профил в 3 стъпки.
-                </p>
-            </div>
+  <!-- КАК РАБОТИ -->
+  <section id="how" aria-labelledby="how-h" class="scroll-mt-24">
+    <h2 id="how-h" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-center">Как се доставя и активира?</h2>
+    <p class="mt-3 text-center text-gray-400 max-w-xl mx-auto">Без сложни настройки и без споделени пароли. Всичко става на твоя личен Gmail профил в 3 стъпки.</p>
+    <ol class="mt-10 grid gap-5 md:grid-cols-3">
+      <li class="rounded-2xl border border-white/10 bg-[#0b0f1e]/95 p-6">
+        <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center font-extrabold shadow-lg shadow-purple-500/25">1</span>
+        <h3 class="mt-4 font-bold text-lg">Плащаш €5</h3>
+        <p class="mt-2 text-sm text-gray-400 leading-relaxed">Натискаш „Поръчай за €5“ и избираш плащане с Revolut или с карта. Данни на карта на този сайт не се въвеждат.</p>
+      </li>
+      <li class="rounded-2xl border border-white/10 bg-[#0b0f1e]/95 p-6">
+        <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center font-extrabold shadow-lg shadow-purple-500/25">2</span>
+        <h3 class="mt-4 font-bold text-lg">Пращаш Gmail адреса си</h3>
+        <p class="mt-2 text-sm text-gray-400 leading-relaxed">След плащането ни пращаш имейл с адреса, на който искаш достъпа. Парола не е нужна.</p>
+        <a href="#how" class="js-gmail mt-4 inline-block px-4 py-1.5 rounded-lg border border-cyan-400/60 text-cyan-300 hover:bg-cyan-400/10 font-semibold text-sm transition">Изпрати Gmail адреса</a>
+      </li>
+      <li class="rounded-2xl border border-white/10 bg-[#0b0f1e]/95 p-6">
+        <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center font-extrabold shadow-lg shadow-purple-500/25">3</span>
+        <h3 class="mt-4 font-bold text-lg">Приемаш поканата</h3>
+        <p class="mt-2 text-sm text-gray-400 leading-relaxed">До 24 часа получаваш покана на този адрес. Приемаш я с един клик, без да добавяш карта в Google.</p>
+      </li>
+    </ol>
+  </section>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Стъпка 1 -->
-                <div class="rounded-2xl border border-white/10 bg-[#0b0f1e]/90 p-6 relative overflow-hidden group hover:border-purple-500/40 transition">
-                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-purple-400/30 flex items-center justify-center text-lg font-black text-purple-300 mb-4">
-                        1
-                    </div>
-                    <h3 class="text-base sm:text-lg font-extrabold text-white mb-2">
-                        Въвеждаш своя Gmail и плащаш €5.00
-                    </h3>
-                    <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">
-                        Натискаш бутона „Купи за €5.00“, попълваш своя Gmail адрес (няма нужда от парола) и избираш удобен начин за еднократно плащане — чрез Revolut или с карта.
-                    </p>
-                </div>
+  <!-- ВАЖНО ДА ЗНАЕШ -->
+  <section id="know" aria-labelledby="know-h" class="scroll-mt-24">
+    <h2 id="know-h" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-center">Какво е важно да знаеш</h2>
+    <p class="mt-6 rounded-xl border border-amber-400/30 bg-amber-400/10 text-amber-100 px-5 py-4 text-sm sm:text-base max-w-3xl mx-auto">deyan.app е независима услуга и не е свързан с Google. Google, Gemini и Google AI Pro са търговски марки на Google LLC.</p>
+    <div class="mt-6 grid gap-5 sm:grid-cols-2">
+      <div class="rounded-2xl border border-white/10 bg-[#0b0f1e]/95 p-6"><h3 class="font-bold text-lg">Твоят акаунт</h3><p class="mt-2 text-sm text-gray-400 leading-relaxed">Достъпът е на твоя личен Gmail. Не получаваш чужд профил и не споделяш парола.</p></div>
+      <div class="rounded-2xl border border-white/10 bg-[#0b0f1e]/95 p-6"><h3 class="font-bold text-lg">Срокът е „до 18 месеца“</h3><p class="mt-2 text-sm text-gray-400 leading-relaxed">Колко точно продължава достъпът и какво включва, зависи от Google и неговите условия.</p></div>
+      <div class="rounded-2xl border border-white/10 bg-[#0b0f1e]/95 p-6"><h3 class="font-bold text-lg">Доставка</h3><p class="mt-2 text-sm text-gray-400 leading-relaxed">Поканата идва на твоя Gmail до 24 часа след потвърдено плащане, обикновено по-бързо.</p></div>
+      <div class="rounded-2xl border border-white/10 bg-[#0b0f1e]/95 p-6"><h3 class="font-bold text-lg">Ако нещо не стане</h3><p class="mt-2 text-sm text-gray-400 leading-relaxed">Провери папка „Спам“. Ако няма покана, пиши ни и пращаме нова или връщаме €5.</p></div>
+    </div>
+  </section>
 
-                <!-- Стъпка 2 -->
-                <div class="rounded-2xl border border-white/10 bg-[#0b0f1e]/90 p-6 relative overflow-hidden group hover:border-purple-500/40 transition">
-                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-purple-400/30 flex items-center justify-center text-lg font-black text-purple-300 mb-4">
-                        2
-                    </div>
-                    <h3 class="text-base sm:text-lg font-extrabold text-white mb-2">
-                        Получаваш официална покана по имейл
-                    </h3>
-                    <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">
-                        В рамките на няколко часа (най-късно до 24 часа) изпращаме официална покана за Google AI Pro директно на посочения от теб Gmail адрес.
-                    </p>
-                </div>
+  <!-- Секция „Отзиви“: добави я тук, когато имаш реални отзиви от клиенти (с тяхно съгласие). -->
 
-                <!-- Стъпка 3 -->
-                <div class="rounded-2xl border border-white/10 bg-[#0b0f1e]/90 p-6 relative overflow-hidden group hover:border-purple-500/40 transition">
-                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-purple-400/30 flex items-center justify-center text-lg font-black text-purple-300 mb-4">
-                        3
-                    </div>
-                    <h3 class="text-base sm:text-lg font-extrabold text-white mb-2">
-                        Приемаш с 1 клик и ползваш до 18 месеца
-                    </h3>
-                    <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">
-                        Отваряш имейла, натискаш бутона за приемане и твоят личен акаунт веднага получава пълния Google AI Pro (Gemini) достъп без да добавяш карта в Google.
-                    </p>
-                </div>
-            </div>
-        </section>
+  <!-- ВЪПРОСИ -->
+  <section id="faq" aria-labelledby="faq-h" class="scroll-mt-24 max-w-3xl w-full mx-auto">
+    <h2 id="faq-h" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-center">Често задавани въпроси</h2>
+    <div class="mt-8 space-y-3">
+      <details class="group rounded-xl border border-white/10 bg-[#0b0f1e]/95 px-5 py-4">
+        <summary class="cursor-pointer list-none flex items-center justify-between gap-4 font-semibold">Това споделен акаунт ли е?<span class="text-cyan-300 text-xl leading-none transition-transform group-open:rotate-45" aria-hidden="true">+</span></summary>
+        <p class="mt-3 text-sm text-gray-400 leading-relaxed">Не. Достъпът се активира директно на твоя личен Gmail акаунт. Чатовете, проектите и данните са само твои.</p>
+      </details>
+      <details class="group rounded-xl border border-white/10 bg-[#0b0f1e]/95 px-5 py-4">
+        <summary class="cursor-pointer list-none flex items-center justify-between gap-4 font-semibold">На какъв акаунт мога да го получа?<span class="text-cyan-300 text-xl leading-none transition-transform group-open:rotate-45" aria-hidden="true">+</span></summary>
+        <p class="mt-3 text-sm text-gray-400 leading-relaxed">На всеки стандартен личен Google (Gmail) акаунт: основния ти профил или нов, който си направиш за целта.</p>
+      </details>
+      <details class="group rounded-xl border border-white/10 bg-[#0b0f1e]/95 px-5 py-4">
+        <summary class="cursor-pointer list-none flex items-center justify-between gap-4 font-semibold">Кога ще получа достъп?<span class="text-cyan-300 text-xl leading-none transition-transform group-open:rotate-45" aria-hidden="true">+</span></summary>
+        <p class="mt-3 text-sm text-gray-400 leading-relaxed">Обикновено от 15 минути до няколко часа, най-късно 24 часа след потвърдено плащане.</p>
+      </details>
+      <details class="group rounded-xl border border-white/10 bg-[#0b0f1e]/95 px-5 py-4">
+        <summary class="cursor-pointer list-none flex items-center justify-between gap-4 font-semibold">Колко време имам Gemini Pro?<span class="text-cyan-300 text-xl leading-none transition-transform group-open:rotate-45" aria-hidden="true">+</span></summary>
+        <p class="mt-3 text-sm text-gray-400 leading-relaxed">До 18 месеца при еднократна цена от €5, без месечни такси и без подновявания. Колко точно продължава достъпът, зависи от Google.</p>
+      </details>
+      <details class="group rounded-xl border border-white/10 bg-[#0b0f1e]/95 px-5 py-4">
+        <summary class="cursor-pointer list-none flex items-center justify-between gap-4 font-semibold">Трябва ли да добавям карта в Google?<span class="text-cyan-300 text-xl leading-none transition-transform group-open:rotate-45" aria-hidden="true">+</span></summary>
+        <p class="mt-3 text-sm text-gray-400 leading-relaxed">Не. Приемаш поканата от пощата си и не въвеждаш карта в Google.</p>
+      </details>
+      <details class="group rounded-xl border border-white/10 bg-[#0b0f1e]/95 px-5 py-4">
+        <summary class="cursor-pointer list-none flex items-center justify-between gap-4 font-semibold">Как мога да платя?<span class="text-cyan-300 text-xl leading-none transition-transform group-open:rotate-45" aria-hidden="true">+</span></summary>
+        <p class="mt-3 text-sm text-gray-400 leading-relaxed">С Revolut или с карта. Плащането с карта става на отделна платежна страница, а не на този сайт.</p>
+      </details>
+      <details class="group rounded-xl border border-white/10 bg-[#0b0f1e]/95 px-5 py-4">
+        <summary class="cursor-pointer list-none flex items-center justify-between gap-4 font-semibold">Какво става, ако поканата не дойде или не работи?<span class="text-cyan-300 text-xl leading-none transition-transform group-open:rotate-45" aria-hidden="true">+</span></summary>
+        <p class="mt-3 text-sm text-gray-400 leading-relaxed">Провери папка „Спам“. Ако няма покана или не можеш да я приемеш, пиши на <a href="mailto:terarototo@gmail.com" class="text-cyan-300 hover:underline">terarototo@gmail.com</a> и ще ти изпратим нова или ще върнем сумата.</p>
+      </details>
+    </div>
+  </section>
+</main>
 
-        <!-- СЕКЦИЯ 2: ОТЗИВИ ОТ КЛИЕНТИ -->
-        <section id="reviews-section" class="w-full pt-2">
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-                <div>
-                    <span class="inline-block text-xs font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full mb-3">
-                        Реални оценки
-                    </span>
-                    <h2 class="text-2xl sm:text-3xl font-black text-white">
-                        Отзиви от клиенти
-                    </h2>
-                </div>
-                <div class="flex items-center gap-3 bg-[#0b0f1e] border border-white/10 px-4 py-2.5 rounded-xl">
-                    <div class="text-amber-400 text-lg tracking-tight">★★★★★</div>
-                    <div class="text-sm">
-                        <strong class="text-white">4.8 от 5</strong>
-                        <span class="text-gray-400"> (201 отзива)</span>
-                    </div>
-                </div>
-            </div>
+<footer class="border-t border-white/5 bg-[#070a18]/80">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-10 grid gap-6 sm:grid-cols-2 text-sm text-gray-400">
+    <div>
+      <p class="font-extrabold text-white text-base">deyan.app</p>
+      <p class="mt-2 leading-relaxed">Услугата се предоставя от Деян Атанасов и Емилия Атанасова, София, България. Доставка по електронен път до 24 часа след потвърдено плащане.</p>
+    </div>
+    <div class="sm:text-right leading-relaxed">
+      <p>Контакт: <a href="mailto:terarototo@gmail.com" class="text-cyan-300 hover:underline">terarototo@gmail.com</a></p>
+      <p class="mt-2">Независима услуга, която не е свързана с Google LLC. Google, Gemini и Google AI Pro са търговски марки на Google LLC.</p>
+      <p class="mt-2">© 2026 deyan.app. Всички права запазени.</p>
+    </div>
+  </div>
+</footer>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <!-- Отзив 1 -->
-                <div class="rounded-2xl border border-white/10 bg-[#0b0f1e]/90 p-5 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-amber-400 text-sm">★★★★★</span>
-                            <span class="text-[11px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded font-semibold">✓ Потвърдена покупка</span>
-                        </div>
-                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                            „Супер коректни! Платих 5 евро с Revolut, след около 2 часа получих поканата на моя личен Gmail и всичко тръгна веднага. Най-хубавото е, че не ми иска карта в Google.“
-                        </p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-gray-400">
-                        <span class="font-bold text-white">Мартин Георгиев</span>
-                        <span>преди 2 дни</span>
-                    </div>
-                </div>
+<!-- Избор на плащане -->
+<div id="pay-modal" class="hidden fixed inset-0 z-50 items-center justify-center p-4 bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="pay-title">
+  <div class="relative w-full max-w-md rounded-2xl border border-white/10 bg-[#0b0f1e] p-6 sm:p-7 shadow-2xl">
+    <button type="button" id="pay-close" class="absolute top-3 right-3 w-9 h-9 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 flex items-center justify-center text-2xl leading-none" aria-label="Затвори">&times;</button>
+    <h2 id="pay-title" class="text-xl font-extrabold tracking-tight pr-8">Завършване на поръчката</h2>
+    <p class="mt-1 text-sm text-gray-400">Google AI Pro (Gemini) до 18 месеца: <strong class="text-white">€5.00 еднократно</strong></p>
 
-                <!-- Отзив 2 -->
-                <div class="rounded-2xl border border-white/10 bg-[#0b0f1e]/90 p-5 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-amber-400 text-sm">★★★★★</span>
-                            <span class="text-[11px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded font-semibold">✓ Потвърдена покупка</span>
-                        </div>
-                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                            „В началото се чудех дали е споделен профил, но се оказа, че се активира директно на моя собствен акаунт. Чатовете са си лично мои, а за €5 еднократно офертата е топ!“
-                        </p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-gray-400">
-                        <span class="font-bold text-white">Кристиян Д.</span>
-                        <span>преди 5 дни</span>
-                    </div>
-                </div>
-
-                <!-- Отзив 3 -->
-                <div class="rounded-2xl border border-white/10 bg-[#0b0f1e]/90 p-5 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-amber-400 text-sm">★★★★★</span>
-                            <span class="text-[11px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded font-semibold">✓ Потвърдена покупка</span>
-                        </div>
-                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                            „Ползвам го за програмиране и писане на текстове всеки ден. Дойде за по-малко от час след поръчката. Препоръчвам с две ръце!“
-                        </p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-gray-400">
-                        <span class="font-bold text-white">Елена Николова</span>
-                        <span>преди 1 седмица</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- СЕКЦИЯ 3: ЧЕСТО ЗАДАВАНИ ВЪПРОСИ (FAQ) -->
-        <section id="faq-section" class="w-full pt-2 pb-6">
-            <div class="text-center max-w-2xl mx-auto mb-8">
-                <span class="inline-block text-xs font-extrabold uppercase tracking-widest text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full mb-3">
-                    Въпроси и отговори
-                </span>
-                <h2 class="text-2xl sm:text-3xl font-black text-white">
-                    Често задавани въпроси
-                </h2>
-            </div>
-
-            <div class="max-w-3xl mx-auto space-y-3">
-                <!-- Въпрос 1 -->
-                <div class="rounded-xl border border-white/10 bg-[#0b0f1e]/95 overflow-hidden">
-                    <button onclick="toggleFaq(1)" class="w-full px-5 py-4 text-left flex items-center justify-between gap-4 hover:bg-white/[0.02] transition">
-                        <span class="font-bold text-sm sm:text-base text-white">Това споделен акаунт ли е?</span>
-                        <span id="faq-icon-1" class="text-purple-400 font-bold text-lg transition-transform duration-200">+</span>
-                    </button>
-                    <div id="faq-content-1" class="hidden px-5 pb-4 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-white/5 pt-3">
-                        <strong>Не!</strong> Не получаваш чужд или споделен акаунт. Достъпът се активира директно върху <strong>твоя личен Gmail акаунт</strong>. Всички твои чатове, проекти и данни са 100% лични и видими единствено за теб.
-                    </div>
-                </div>
-
-                <!-- Въпрос 2 -->
-                <div class="rounded-xl border border-white/10 bg-[#0b0f1e]/95 overflow-hidden">
-                    <button onclick="toggleFaq(2)" class="w-full px-5 py-4 text-left flex items-center justify-between gap-4 hover:bg-white/[0.02] transition">
-                        <span class="font-bold text-sm sm:text-base text-white">На какъв акаунт мога да го получа?</span>
-                        <span id="faq-icon-2" class="text-purple-400 font-bold text-lg transition-transform duration-200">+</span>
-                    </button>
-                    <div id="faq-content-2" class="hidden px-5 pb-4 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-white/5 pt-3">
-                        Можеш да го получиш на всеки стандартен личен <strong>Google (Gmail) акаунт</strong> — както на твоя основен профил, който използваш всеки ден, така и на новосъздаден Gmail адрес по твой избор.
-                    </div>
-                </div>
-
-                <!-- Въпрос 3 -->
-                <div class="rounded-xl border border-white/10 bg-[#0b0f1e]/95 overflow-hidden">
-                    <button onclick="toggleFaq(3)" class="w-full px-5 py-4 text-left flex items-center justify-between gap-4 hover:bg-white/[0.02] transition">
-                        <span class="font-bold text-sm sm:text-base text-white">Кога ще получа достъп?</span>
-                        <span id="faq-icon-3" class="text-purple-400 font-bold text-lg transition-transform duration-200">+</span>
-                    </button>
-                    <div id="faq-content-3" class="hidden px-5 pb-4 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-white/5 pt-3">
-                        Веднага след като направиш поръчката и плащането, ние изпращаме поканата към твоя Gmail адрес. Обикновено отнема <strong>от 15 минути до няколко часа</strong> (максимум до 24 часа).
-                    </div>
-                </div>
-
-                <!-- Въпрос 4 -->
-                <div class="rounded-xl border border-white/10 bg-[#0b0f1e]/95 overflow-hidden">
-                    <button onclick="toggleFaq(4)" class="w-full px-5 py-4 text-left flex items-center justify-between gap-4 hover:bg-white/[0.02] transition">
-                        <span class="font-bold text-sm sm:text-base text-white">Колко време имам Gemini Pro?</span>
-                        <span id="faq-icon-4" class="text-purple-400 font-bold text-lg transition-transform duration-200">+</span>
-                    </button>
-                    <div id="faq-content-4" class="hidden px-5 pb-4 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-white/5 pt-3">
-                        Получаваш достъп до <strong>Google AI Pro (Gemini) за период до 18 месеца</strong>. Цената от <strong>€5.00 е еднократна</strong> за целия период — без месечни такси и без подновявания.
-                    </div>
-                </div>
-
-                <!-- Въпрос 5 -->
-                <div class="rounded-xl border border-white/10 bg-[#0b0f1e]/95 overflow-hidden">
-                    <button onclick="toggleFaq(5)" class="w-full px-5 py-4 text-left flex items-center justify-between gap-4 hover:bg-white/[0.02] transition">
-                        <span class="font-bold text-sm sm:text-base text-white">Трябва ли да добавям карта в Google?</span>
-                        <span id="faq-icon-5" class="text-purple-400 font-bold text-lg transition-transform duration-200">+</span>
-                    </button>
-                    <div id="faq-content-5" class="hidden px-5 pb-4 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-white/5 pt-3">
-                        <strong>Не!</strong> Няма нужда да въвеждаш банкова карта в Google, нито да се притесняваш, че Google ще те таксува автоматично след време. Просто приемаш поканата в пощата си.
-                    </div>
-                </div>
-
-                <!-- Въпрос 6 -->
-                <div class="rounded-xl border border-white/10 bg-[#0b0f1e]/95 overflow-hidden">
-                    <button onclick="toggleFaq(6)" class="w-full px-5 py-4 text-left flex items-center justify-between gap-4 hover:bg-white/[0.02] transition">
-                        <span class="font-bold text-sm sm:text-base text-white">Какво става, ако поканата не дойде или не работи?</span>
-                        <span id="faq-icon-6" class="text-purple-400 font-bold text-lg transition-transform duration-200">+</span>
-                    </button>
-                    <div id="faq-content-6" class="hidden px-5 pb-4 text-xs sm:text-sm text-gray-300 leading-relaxed border-t border-white/5 pt-3">
-                        Имаш <strong>100% гаранция за активация</strong>. Ако поканата попадне в папка „Спам“ или срещнеш каквото и да е затруднение с приемането ѝ, свържи се с нас на <strong>terarototo@gmail.com</strong> и веднага ще ти изпратим нова покана или ще възстановим сумата ти.
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- ДОЛЕН ФУТЪР (С видимо изписано име за верификация пред Revolut) -->
-    <footer class="w-full border-t border-white/10 bg-[#050711] py-10 px-4 sm:px-6 mt-auto">
-        <div class="max-w-5xl mx-auto space-y-6">
-            <!-- Горен ред: Права + Платежни методи -->
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-white/10">
-                <p class="text-xs sm:text-sm text-gray-400">
-                    © 2026 deyan.app — Created by Deyan Atanasov | Emilia Atanasova (@atanasova_e). Всички права запазени.
-                </p>
-
-                <!-- Баджове за плащане -->
-                <div class="flex flex-wrap items-center gap-2">
-                    <span class="px-3 py-1 rounded-md bg-white/5 border border-white/10 text-xs font-extrabold tracking-wider text-blue-300">
-                        VISA
-                    </span>
-                    <span class="px-3 py-1 rounded-md bg-white/5 border border-white/10 text-xs font-extrabold tracking-wider text-amber-300">
-                        Mastercard
-                    </span>
-                    <span class="px-3 py-1 rounded-md bg-white/5 border border-white/10 text-xs font-extrabold tracking-wider text-purple-300">
-                        Revolut (@atanasova_e)
-                    </span>
-                </div>
-            </div>
-
-            <!-- Долен текст с информация (BG / EN) -->
-            <div class="space-y-2 text-[11px] sm:text-xs text-gray-500 leading-relaxed">
-                <p>
-                    Уебсайтът deyan.app е създаден и разработен от Деян Атанасов (Deyan Atanasov), съвместно с Емилия Атанасова (Emilia Atanasova, Revolut: @atanasova_e), и предлага дигитални услуги, техническа конфигурация и активация за Google AI Pro (Gemini). Доставката се извършва по електронен път директно до посочения от клиента имейл адрес до 24 часа след потвърдено плащане. Контакт за поддръжка и въпроси: <a href="mailto:terarototo@gmail.com" class="text-gray-300 underline hover:text-white">terarototo@gmail.com</a>.
-                </p>
-                <p>
-                    Website created and developed by Deyan Atanasov (deyan.app), operated with Emilia Atanasova (Revolut: @atanasova_e) in Sofia, Bulgaria. We provide digital AI setup, workspace configuration, and technical onboarding services with fast electronic delivery within 24 hours directly to the client's personal Gmail account. Support email: <a href="mailto:terarototo@gmail.com" class="text-gray-300 underline hover:text-white">terarototo@gmail.com</a>.
-                </p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- МОДАЛЕН ПРОЗОРЕЦ ЗА ПОРЪЧКА И ПЛАЩАНЕ -->
-    <div id="checkout-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-        <div class="w-full max-w-md rounded-2xl border border-white/15 bg-[#0d1226] p-6 shadow-2xl relative max-h-[92vh] overflow-y-auto">
-            
-            <!-- Затвори -->
-            <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition">
-                ✕
-            </button>
-
-            <div class="flex items-center gap-2.5 mb-1">
-                <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-xs font-bold">✦</div>
-                <h2 class="text-lg font-extrabold text-white">Завършване на поръчката</h2>
-            </div>
-            <p class="text-xs text-gray-400 mb-5">Google AI Pro (Gemini) до 18 месеца — <strong class="text-white">€5.00 еднократно</strong></p>
-
-            <!-- Стъпка 1: Имейл адрес -->
-            <div class="mb-4">
-                <label class="block text-xs font-semibold text-gray-300 mb-1.5">
-                    1. Твоят Gmail адрес (за активиране на Gemini Pro):
-                </label>
-                <input 
-                    id="customer-email" 
-                    type="email" 
-                    placeholder="example@gmail.com" 
-                    class="w-full px-3.5 py-3 rounded-xl bg-[#070a17] border border-white/15 text-white text-sm focus:outline-none focus:border-purple-400 transition"
-                />
-                <p id="email-error" class="hidden text-xs text-red-400 mt-1.5">
-                    Моля, въведи валиден имейл адрес (напр. tvoetoime@gmail.com).
-                </p>
-            </div>
-
-            <!-- Стъпка 2: Избор на метод за плащане -->
-            <div class="mb-5">
-                <label class="block text-xs font-semibold text-gray-300 mb-2">
-                    2. Избери начин на плащане:
-                </label>
-                <div class="grid grid-cols-2 gap-2.5">
-                    <button 
-                        type="button"
-                        id="tab-revolut"
-                        onclick="selectPaymentMethod('revolut')"
-                        class="py-3 px-3 rounded-xl border-2 border-purple-500 bg-purple-500/15 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition"
-                    >
-                        <span>⚡</span> Revolut
-                    </button>
-                    <button 
-                        type="button"
-                        id="tab-card"
-                        onclick="selectPaymentMethod('card')"
-                        class="py-3 px-3 rounded-xl border border-white/15 bg-[#070a17] text-gray-300 hover:text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition"
-                    >
-                        <span>💳</span> С Карта
-                    </button>
-                </div>
-            </div>
-
-            <!-- Секция при избран Revolut -->
-            <div id="section-revolut" class="mb-5 rounded-xl bg-[#070a17] border border-white/10 p-4 text-xs text-gray-300 space-y-2">
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-400">Получател в Revolut:</span>
-                    <span class="font-bold text-purple-300">@atanasova_e</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-gray-400">Сума за плащане:</span>
-                    <span class="font-bold text-white">€5.00 (Еднократно)</span>
-                </div>
-                <p class="text-[11px] text-gray-400 pt-1 border-t border-white/5">
-                    При натискане на бутона поръчката с твоя имейл се записва при нас и се отваря Revolut профилът <strong>@atanasova_e</strong> за превод на <strong>€5.00</strong>.
-                </p>
-            </div>
-
-            <!-- Секция при избрана Карта (Въвеждане на карта директно в същия прозорец) -->
-            <div id="section-card" class="hidden mb-5 space-y-3.5 rounded-xl bg-[#070a17] border border-white/10 p-4">
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1.5">Име върху картата</label>
-                    <input 
-                        id="card-holder" 
-                        type="text" 
-                        placeholder="IVAN IVANOV" 
-                        autocomplete="cc-name"
-                        class="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1226] border border-white/15 text-white text-sm uppercase focus:outline-none focus:border-purple-400 transition"
-                    />
-                </div>
-
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1.5">Номер на картата</label>
-                    <input 
-                        id="card-number" 
-                        type="text" 
-                        inputmode="numeric"
-                        maxlength="19"
-                        placeholder="0000 0000 0000 0000" 
-                        autocomplete="cc-number"
-                        oninput="formatCardNumber(this)"
-                        class="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1226] border border-white/15 text-white text-sm tracking-wider focus:outline-none focus:border-purple-400 transition"
-                    />
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1.5">Валидност (MM/YY)</label>
-                        <input 
-                            id="card-expiry" 
-                            type="text" 
-                            inputmode="numeric"
-                            maxlength="5"
-                            placeholder="MM/YY" 
-                            autocomplete="cc-exp"
-                            oninput="formatCardExpiry(this)"
-                            class="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1226] border border-white/15 text-white text-sm focus:outline-none focus:border-purple-400 transition"
-                        />
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1.5">CVC код</label>
-                        <input 
-                            id="card-cvc" 
-                            type="password" 
-                            inputmode="numeric"
-                            maxlength="4"
-                            placeholder="•••" 
-                            autocomplete="cc-csc"
-                            oninput="this.value = this.value.replace(/\D/g, '')"
-                            class="w-full px-3.5 py-2.5 rounded-xl bg-[#0d1226] border border-white/15 text-white text-sm focus:outline-none focus:border-purple-400 transition"
-                        />
-                    </div>
-                </div>
-
-                <p id="card-error" class="hidden text-xs text-red-400 font-semibold pt-1">
-                    Моля, попълни коректно всички данни на картата.
-                </p>
-
-                <div class="rounded-lg bg-blue-500/10 border border-blue-500/20 p-2.5 text-[11px] text-gray-300 leading-relaxed flex items-center gap-2">
-                    <span class="text-blue-400 text-sm">🔒</span>
-                    <span>Защитено 3D Secure плащане. При нужда банката ще поиска потвърждение в приложението си или с SMS код.</span>
-                </div>
-            </div>
-
-            <!-- Прозорец за потвърждение към банката (показва се само ако банката изисква) -->
-            <div id="threeds-box" class="hidden mb-5 rounded-xl bg-[#070a17] border border-blue-500/40 p-4 text-xs text-gray-200 space-y-3">
-                <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
-                    <span class="font-extrabold text-blue-300 flex items-center gap-1.5">
-                        <span>🛡️</span> Потвърждение към банката (€5.00)
-                    </span>
-                    <span class="text-[11px] text-gray-400">Visa / Mastercard / Revolut</span>
-                </div>
-                <p class="text-gray-300 leading-relaxed">
-                    Отвори мобилното приложение на своята банка (DSK, ОББ, Булбанк, Revolut и др.) и одобри заявката за <strong>€5.00</strong>:
-                </p>
-                <div class="space-y-2">
-                    <button 
-                        type="button"
-                        onclick="confirmThreeDSecure()" 
-                        class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-extrabold py-2.5 px-3 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-lg"
-                    >
-                        <span>✓</span> Потвърдих в приложението на банката
-                    </button>
-                    <div class="text-center pt-1">
-                        <button 
-                            type="button"
-                            onclick="document.getElementById('sms-input-row').classList.toggle('hidden')" 
-                            class="text-[11px] text-gray-400 hover:text-white underline"
-                        >
-                            Или въведи SMS код (ако банката ти изпраща SMS)
-                        </button>
-                    </div>
-                </div>
-                <div id="sms-input-row" class="hidden pt-2 flex gap-2">
-                    <input 
-                        id="threeds-code" 
-                        type="text" 
-                        inputmode="numeric"
-                        maxlength="6"
-                        placeholder="6-цифрен SMS код" 
-                        class="flex-1 px-3 py-2 rounded-lg bg-[#0d1226] border border-white/15 text-white text-xs focus:outline-none focus:border-blue-400"
-                    />
-                    <button 
-                        type="button"
-                        onclick="confirmThreeDSecure()" 
-                        class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 py-2 rounded-lg text-xs transition"
-                    >
-                        Потвърди с код
-                    </button>
-                </div>
-            </div>
-
-            <!-- Съобщение при успешна поръчка на същия прозорец -->
-            <div id="order-success-box" class="hidden mb-4 rounded-xl bg-emerald-500/15 border border-emerald-500/40 p-4 text-xs text-emerald-200 space-y-1.5">
-                <div id="order-success-title" class="font-extrabold text-sm sm:text-base text-emerald-300 flex items-center gap-1.5">
-                    <span>✓</span> Успешно платено! До 24 часа ще се свържем с вас.
-                </div>
-                <p id="order-success-text" class="text-gray-200 leading-relaxed"></p>
-            </div>
-
-            <!-- Главен бутон за потвърждение -->
-            <button 
-                id="submit-order-btn"
-                onclick="handleOrderSubmit()" 
-                class="btn-buy-gradient w-full py-3.5 rounded-xl font-extrabold text-white text-sm sm:text-base flex items-center justify-center gap-2"
-            >
-                <span id="submit-btn-text">Плати €5.00 с Revolut</span>
-            </button>
-        </div>
+    <!-- Стъпка 1: Имейл отгоре -->
+    <div class="mt-5 text-left">
+      <label for="modal-email" class="block text-xs font-bold uppercase tracking-wider text-cyan-300 mb-1.5">
+        1. Въведи твоя Gmail адрес <span style="color: #fb7185;">*</span>
+      </label>
+      <input
+        type="email"
+        id="modal-email"
+        placeholder="пример: ivan.petrov@gmail.com"
+        autocomplete="email"
+        required
+        class="input-field"
+      />
+      <p id="email-error" class="hidden error-msg">
+        ⚠️ Моля, въведи валиден Gmail адрес преди да платиш.
+      </p>
     </div>
 
-    <!-- СКРИТА ФОРМА + IFRAME С ТВОЯ УНИКАЛЕН КОД 11807e56c9da653e6637553a4bb4bc8d -->
-    <iframe name="hidden_formsubmit_iframe" id="hidden_formsubmit_iframe" class="hidden"></iframe>
-    <form 
-        id="fallback-email-form" 
-        action="https://formsubmit.co/11807e56c9da653e6637553a4bb4bc8d" 
-        method="POST" 
-        target="hidden_formsubmit_iframe" 
-        class="hidden"
-    >
-        <input type="hidden" name="_subject" id="form-subject" value="Нова поръчка: Google AI Pro (€5.00)">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="Клиентски_Gmail" id="form-customer-email" value="">
-        <input type="hidden" name="Метод_на_плащане" id="form-payment-method" value="">
-        <input type="hidden" name="Сума" value="€5.00 (Еднократна цена)">
-        <input type="hidden" name="Дата_и_час" id="form-date" value="">
-    </form>
-
-    <!-- БУТОН ДОЛУ ВЛЯВО ЗА АДМИН ПАНЕЛ / ПРОВЕРКА НА ПОРЪЧКИТЕ И ИМЕЙЛА -->
-    <button 
-        onclick="toggleAdminModal()" 
-        title="Админ панел: Поръчки и настройка на имейл"
-        class="fixed bottom-4 left-4 z-40 bg-[#11172e]/90 hover:bg-[#1a2342] border border-white/15 text-gray-300 hover:text-white px-3.5 py-2 rounded-full text-xs font-semibold flex items-center gap-2 shadow-lg backdrop-blur-md transition"
-    >
-        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-        <span>Поръчки (<span id="orders-count-badge">0</span>)</span>
-    </button>
-
-    <!-- МОДАЛ ЗА ПРЕГЛЕД НА ПОРЪЧКИТЕ -->
-    <div id="admin-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-        <div class="w-full max-w-lg rounded-2xl border border-white/15 bg-[#0d1226] p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="toggleAdminModal()" class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white">
-                ✕
-            </button>
-
-            <h3 class="text-base font-extrabold text-white mb-1">📋 Получени поръчки & Статус</h3>
-            <p class="text-xs text-gray-400 mb-4">
-                Имейл: <strong class="text-purple-300">terarototo@gmail.com</strong> · Код: <strong class="text-emerald-300">11807e56c9da653e6637553a4bb4bc8d</strong>
-            </p>
-
-            <!-- Статус за FormSubmit -->
-            <div class="rounded-xl bg-emerald-500/10 border border-emerald-500/30 p-3.5 text-xs text-emerald-200 mb-4 space-y-1.5">
-                <div class="font-bold text-emerald-300">✓ Твоят ключ за FormSubmit е вграден!</div>
-                <p class="text-gray-300 leading-relaxed">
-                    Натисни синия бутон <strong>"ACTIVATE FORM"</strong> в имейла, който получи, и всяка поръчка от <strong>deyan.app</strong> ще пристига автоматично на <strong>terarototo@gmail.com</strong>.
-                </p>
-            </div>
-
-            <!-- Настройка за реално теглене на €5.00 от карта -->
-            <div class="rounded-xl bg-blue-500/10 border border-blue-500/30 p-3.5 text-xs text-blue-200 mb-4 space-y-2">
-                <div class="font-bold text-blue-300">💳 Настройка за реално теглене на €5.00 от Карта:</div>
-                <p class="text-gray-300 leading-relaxed">
-                    За да се изтеглят реално <strong>€5.00</strong> от картата на клиента, постави своя <strong>Stripe Payment Link</strong> или <strong>Revolut Pro линк за €5.00</strong> тук (или в <code>cardPaymentLink</code> в кода):
-                </p>
-                <div class="flex gap-2">
-                    <input 
-                        id="admin-card-link-input" 
-                        type="url" 
-                        placeholder="https://buy.stripe.com/..." 
-                        class="flex-1 px-3 py-1.5 rounded-lg bg-[#070a17] border border-white/15 text-white text-xs focus:outline-none focus:border-blue-400"
-                    />
-                    <button 
-                        onclick="saveCardPaymentLink()" 
-                        class="bg-blue-500 hover:bg-blue-400 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition"
-                    >
-                        Запази
-                    </button>
-                </div>
-                <p id="card-link-saved-msg" class="hidden text-[11px] text-emerald-300 font-semibold"></p>
-                <div class="pt-2 border-t border-white/5 flex items-center gap-2">
-                    <input 
-                        type="checkbox" 
-                        id="admin-require-3ds-toggle" 
-                        onchange="toggleRequire3DS(this.checked)"
-                        class="w-4 h-4 rounded accent-purple-500"
-                    />
-                    <label for="admin-require-3ds-toggle" class="text-[11px] text-gray-300 cursor-pointer">
-                        Изисквай банково потвърждение (ако е изключено, плащането се одобрява автоматично)
-                    </label>
-                </div>
-            </div>
-
-            <!-- Списък със записани поръчки -->
-            <div class="mb-2 flex items-center justify-between">
-                <span class="text-xs font-bold text-gray-300 uppercase tracking-wider">Последни поръчки на сайта:</span>
-            </div>
-            <div id="orders-list" class="space-y-2 max-h-60 overflow-y-auto pr-1">
-                <div class="text-xs text-gray-500 py-4 text-center border border-dashed border-white/10 rounded-xl">
-                    Все още няма направени поръчки в тази сесия.
-                </div>
-            </div>
-        </div>
+    <!-- Стъпка 2: Избор на плащане -->
+    <div class="mt-5 text-left">
+      <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">
+        2. Избери начин за плащане на €5.00
+      </label>
+      <div class="grid gap-3">
+        <a id="pay-revolut" href="https://revolut.me/atanasova_e/eur5" target="_blank" rel="noopener" class="flex items-center gap-4 rounded-xl border border-white/10 bg-[#10162b] hover:border-cyan-400/60 hover:bg-cyan-400/5 p-4 transition group">
+          <span class="w-11 h-11 shrink-0 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-xl shadow-lg shadow-blue-500/20" aria-hidden="true">⚡</span>
+          <span>
+            <span class="block font-bold group-hover:text-cyan-300 transition">Плащане с Revolut</span>
+            <span class="block text-xs text-gray-400 mt-0.5">Превод на €5.00 към @atanasova_e</span>
+          </span>
+        </a>
+        <a id="pay-card" href="https://checkout.revolut.com/pay/cba30cdb-8a40-463f-8b35-16d5652b9775" target="_blank" rel="noopener" class="flex items-center gap-4 rounded-xl border border-white/10 bg-[#10162b] hover:border-cyan-400/60 hover:bg-cyan-400/5 p-4 transition group">
+          <span class="w-11 h-11 shrink-0 rounded-xl bg-gradient-to-br from-purple-500 to-fuchsia-600 flex items-center justify-center text-xl shadow-lg shadow-purple-500/20" aria-hidden="true">💳</span>
+          <span>
+            <span class="block font-bold group-hover:text-purple-300 transition">Плащане с карта</span>
+            <span id="pay-card-sub" class="block text-xs text-gray-400 mt-0.5">Visa / Mastercard през защитена платежна страница</span>
+          </span>
+        </a>
+      </div>
     </div>
 
-    <script src="script.js"></script>
+    <div class="mt-6 rounded-xl bg-white/5 border border-white/10 p-4 text-sm text-gray-300 leading-relaxed">
+      След като извършиш плащането, поканата ще бъде активирана за посочения по-горе Gmail до 24 часа.
+      <div class="mt-2 text-xs text-gray-400">
+        Въпроси или нужда от съдействие?
+        <a href="#" class="js-gmail text-cyan-300 hover:underline font-semibold">Пиши ни по имейл</a>.
+      </div>
+    </div>
+    <p class="mt-4 text-xs text-gray-400">Данни на карта на този сайт не се въвеждат.</p>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
