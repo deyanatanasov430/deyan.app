@@ -1,221 +1,132 @@
-// ==========================================
-// Конфигурация на плащанията
-// ==========================================
-const REVOLUT_LINK = "https://revolut.me/atanasova_e/eur5"; // Revolut профил с предварително заредени €5
-const CARD_PAYMENT_LINK = "https://checkout.revolut.com/pay/cba30cdb-8a40-463f-8b35-16d5652b9775"; // Revolut Pro за €5
-const SELLER_EMAIL = "terarototo@gmail.com";
-const FORMSUBMIT_TOKEN = "11807e56c9da653e6637553a4bb4bc8d";
+// Настройки: промени ги тук.
+  const REVOLUT_LINK = "https://revolut.me/atanasova_e/eur5";
+  const CARD_PAYMENT_LINK = "https://checkout.revolut.com/pay/cba30cdb-8a40-463f-8b35-16d5652b9775";
+  const EMAIL = "terarototo@gmail.com";                        // тук идват известията за нови поръчки
+  const ORDER_URL = "https://formsubmit.co/ajax/11807e56c9da653e6637553a4bb4bc8d";     // FormSubmit
 
-const mail = (subject, body) =>
-  "mailto:" + SELLER_EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-
-// Динамично обновяване на резервните имейл линкове
-function updateGmailLinks(customerEmail) {
-  const email = (customerEmail || "").trim();
-  const subject = email ? "Google AI Pro поръчка (" + email + ")" : "Google AI Pro поръчка";
-  const body = email
-    ? "Здравейте!\n\nПлатих €5.00 за Google AI Pro (Gemini).\nМоят Gmail адрес за активиране на поканата е: " + email + "\n\nПоздрави!"
-    : "Здравейте!\n\nПлатих за Google AI Pro. Моят Gmail адрес за активиране е: ";
-
-  document.querySelectorAll(".js-gmail").forEach(function (a) {
-    a.href = mail(subject, body);
-  });
-}
-
-// Изпращане на данните за поръчката към продавача във фонов режим (без забавяне за клиента)
-function sendOrderNotification(customerEmail, paymentMethod) {
-  const payload = JSON.stringify({
-    email: customerEmail,
-    "Метод_на_плащане": paymentMethod,
-    "Сума": "€5.00",
-    "Услуга": "Google AI Pro (Gemini) до 18 месеца",
-    "Дата": new Date().toLocaleString("bg-BG"),
-    "Сайт": window.location.hostname || "deyan.app",
-    _subject: "Нова поръчка за Google AI Pro (€5) от " + customerEmail + " [" + paymentMethod + "]"
-  });
-
-  const url = "https://formsubmit.co/ajax/" + FORMSUBMIT_TOKEN;
-
-  if (navigator.sendBeacon) {
-    const blob = new Blob([payload], { type: "application/json" });
-    navigator.sendBeacon(url, blob);
-  } else {
-    fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: payload,
-      keepalive: true
-    }).catch(function (err) {
-      console.warn("Notice err:", err);
-    });
+  const $ = function (id) { return document.getElementById(id); };
+  const mail = function (subject, body) {
+    return "mailto:" + EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  };
+  function setLink(el, url) {
+    el.href = url;
+    if (/^https?:/.test(url)) { el.target = "_blank"; el.rel = "noopener"; }
+    else { el.removeAttribute("target"); el.removeAttribute("rel"); }
   }
-}
+  const store = {
+    get: function () { try { return localStorage.getItem("order_email") || ""; } catch (e) { return ""; } },
+    set: function (v) { try { localStorage.setItem("order_email", v); } catch (e) {} }
+  };
 
-// Елементи на страницата и модалния прозорец
-const modal = document.getElementById("pay-modal");
-const pageEmail = document.getElementById("page-email");
-const modalEmail = document.getElementById("modal-email");
-const emailError = document.getElementById("email-error");
-const payRevolutBtn = document.getElementById("pay-revolut");
-const payCardBtn = document.getElementById("pay-card");
-let lastFocus = null;
-
-// Задаване на href атрибутите
-if (payRevolutBtn) {
-  payRevolutBtn.href = REVOLUT_LINK;
-  payRevolutBtn.target = "_blank";
-  payRevolutBtn.rel = "noopener";
-}
-
-if (payCardBtn) {
+  setLink($("pay-revolut"), REVOLUT_LINK || mail("Плащане с Revolut – Google AI Pro", "Здравей! Искам да платя с Revolut."));
   if (CARD_PAYMENT_LINK) {
-    payCardBtn.href = CARD_PAYMENT_LINK;
-    payCardBtn.target = "_blank";
-    payCardBtn.rel = "noopener";
+    setLink($("pay-card"), CARD_PAYMENT_LINK);
   } else {
-    payCardBtn.href = mail("Плащане с карта – Google AI Pro", "Здравейте! Искам да платя с карта за Google AI Pro.");
-  }
-}
-
-// Синхронизация между полетата за имейл
-function syncEmailInput(val) {
-  if (pageEmail && pageEmail.value !== val) pageEmail.value = val;
-  if (modalEmail && modalEmail.value !== val) modalEmail.value = val;
-  if (emailError) emailError.classList.add("hidden");
-  if (modalEmail) modalEmail.classList.remove("has-error");
-  if (pageEmail) pageEmail.classList.remove("has-error");
-  updateGmailLinks(val);
-}
-
-if (pageEmail) {
-  pageEmail.addEventListener("input", function (e) {
-    syncEmailInput(e.target.value);
-  });
-}
-
-if (modalEmail) {
-  modalEmail.addEventListener("input", function (e) {
-    syncEmailInput(e.target.value);
-  });
-  modalEmail.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      if (payRevolutBtn) payRevolutBtn.focus();
-    }
-  });
-}
-
-function openModal(e) {
-  if (e) e.preventDefault();
-  lastFocus = document.activeElement;
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-  document.body.style.overflow = "hidden";
-
-  // Автоматично попълване от полето на страницата или localStorage
-  const currentVal = (modalEmail ? modalEmail.value : "").trim();
-  if (!currentVal) {
-    const pageVal = (pageEmail ? pageEmail.value : "").trim();
-    let saved = "";
-    try { saved = localStorage.getItem("customer_gmail") || ""; } catch (_) {}
-
-    if (pageVal) {
-      syncEmailInput(pageVal);
-    } else if (saved) {
-      syncEmailInput(saved);
-    }
+    setLink($("pay-card"), mail("Плащане с карта – Google AI Pro", "Здравей! Искам да платя с карта."));
+    $("pay-card-sub").textContent = "Пишеш ни и получаваш линк за плащане";
   }
 
-  // Фокусиране в полето за имейл най-отгоре
-  if (modalEmail) {
-    setTimeout(function () {
-      modalEmail.focus();
-      if (modalEmail.value) modalEmail.select();
-    }, 50);
+  const modal = $("pay-modal");
+  const steps = ["step-email", "step-pay", "step-done"];
+  let customerEmail = "", lastFocus = null;
+
+  function showStep(name) {
+    steps.forEach(function (id) { $(id).classList.toggle("hidden", id !== "step-" + name); });
   }
-}
+  function showModal() {
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+    document.body.style.overflow = "hidden";
+  }
+  function closeModal() {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+    document.body.style.overflow = "";
+    if (lastFocus) lastFocus.focus();
+  }
+  function openModal(e) {
+    if (e) e.preventDefault();
+    lastFocus = document.activeElement;
+    showModal();
+    showStep("email");
+    $("email-error").classList.add("hidden");
+    $("order-email").value = store.get();
+    $("order-email").focus();
+  }
+  function showDone(opened, link) {
+    $("email-done").textContent = customerEmail || store.get() || "имейла от поръчката";
+    $("done-opened").classList.toggle("hidden", !opened);
+    $("pay-again").classList.toggle("hidden", !opened);
+    if (opened && link) setLink($("pay-again"), link);
+    showStep("done");
+    $("done-close").focus();
+  }
 
-function closeModal() {
-  modal.classList.add("hidden");
-  modal.classList.remove("flex");
-  document.body.style.overflow = "";
-  if (emailError) emailError.classList.add("hidden");
-  if (modalEmail) modalEmail.classList.remove("has-error");
-  if (lastFocus) lastFocus.focus();
-}
+  // Известие за нова поръчка (имейл + начин на плащане). Не означава, че е платено.
+  function sendOrder(method) {
+    try {
+      fetch(ORDER_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          _subject: "Нова поръчка (очаква плащане): Google AI Pro",
+          _captcha: "false",
+          email: customerEmail,
+          payment_method: method,
+          product: "Google AI Pro (Gemini) до 18 месеца, €5.00",
+          note: "Клиентът отвори платежната страница. Провери плащането в Revolut, преди да изпратиш достъпа."
+        })
+      }).catch(function () {});
+    } catch (e) {}
+  }
 
-document.querySelectorAll(".js-buy").forEach(function (btn) {
-  btn.addEventListener("click", openModal);
-});
-
-const closeBtn = document.getElementById("pay-close");
-if (closeBtn) closeBtn.addEventListener("click", closeModal);
-if (modal) {
-  modal.addEventListener("click", function (e) {
-    if (e.target === modal) closeModal();
-  });
-}
-
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape" && modal && !modal.classList.contains("hidden")) closeModal();
-});
-
-// Проверка на имейла преди стартиране на плащането
-function handlePaymentClick(e, method) {
-  const email = (modalEmail ? modalEmail.value : (pageEmail ? pageEmail.value : "")).trim();
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (!email || !emailRegex.test(email)) {
+  // 1 → 2: имейлът е задължителен преди плащане
+  $("step-email").addEventListener("submit", function (e) {
     e.preventDefault();
-    if (emailError) emailError.classList.remove("hidden");
-    if (modalEmail) {
-      modalEmail.classList.add("has-error");
-      modalEmail.focus();
+    const v = $("order-email").value.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
+      $("email-error").classList.remove("hidden");
+      $("order-email").focus();
+      return;
     }
-    return false;
-  }
-
-  if (emailError) emailError.classList.add("hidden");
-  if (modalEmail) modalEmail.classList.remove("has-error");
-
-  try { localStorage.setItem("customer_gmail", email); } catch (_) {}
-  updateGmailLinks(email);
-
-  // Изпращане на данните към продавача
-  sendOrderNotification(email, method);
-
-  // Връзката продължава стандартно към target="_blank", без блокиране от браузъра
-  return true;
-}
-
-if (payRevolutBtn) {
-  payRevolutBtn.addEventListener("click", function (e) {
-    handlePaymentClick(e, "Revolut");
+    $("email-error").classList.add("hidden");
+    customerEmail = v;
+    store.set(v);
+    $("email-show").textContent = v;
+    showStep("pay");
+    $("pay-revolut").focus();
   });
-}
+  $("email-change").addEventListener("click", function () { showStep("email"); $("order-email").focus(); });
 
-if (payCardBtn) {
-  payCardBtn.addEventListener("click", function (e) {
-    handlePaymentClick(e, "Card");
+  // 2 → 3: плащането се отваря в нов раздел, а тук остава „Благодарим“
+  [["pay-revolut", "Revolut"], ["pay-card", "Карта"]].forEach(function (o) {
+    $(o[0]).addEventListener("click", function () {
+      const link = this.href;
+      sendOrder(o[1]);
+      setTimeout(function () { showDone(true, link); }, 200);
+    });
   });
-}
 
-// Задържане на таб-навигацията вътре в прозореца
-if (modal) {
+  document.querySelectorAll(".js-buy").forEach(function (a) { a.addEventListener("click", openModal); });
+  $("pay-close").addEventListener("click", closeModal);
+  $("done-close").addEventListener("click", closeModal);
+  modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) closeModal();
+  });
   modal.addEventListener("keydown", function (e) {
     if (e.key !== "Tab") return;
-    const f = modal.querySelectorAll("a[href], button:not([disabled]), input:not([disabled])");
+    const f = Array.prototype.filter.call(modal.querySelectorAll("a[href], button, input"), function (el) { return el.offsetParent !== null; });
     if (!f.length) return;
     const first = f[0], last = f[f.length - 1];
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
-}
 
-// Първоначална инициализация на резервните имейл линкове
-updateGmailLinks("");
+  // Връщане от плащане: https://deyan.app/?success=1 (само „Благодарим“, без линк за достъп)
+  if (/[?&]success\b/.test(location.search) || location.hash === "#success") {
+    try { history.replaceState(null, "", location.pathname); } catch (e) {}
+    customerEmail = store.get();
+    showModal();
+    showDone(false);
+  }
